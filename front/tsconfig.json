@@ -12,7 +12,7 @@
     "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
     "noEmit": true,
-    "types": ["element-plus/global"], //types
+    "types": ["element-plus/global","node"], //types
     "baseUrl": "./", // 解析非相对模块的基础地址，默认是当前目录
     "paths": { "@/*": ["src/*"] }, // 路径映射，相对于baseUrl
     "allowSyntheticDefaultImports": true // 允许默认导入
