@@ -18,11 +18,11 @@ interface anyObj {
 //   total: number
 // }
 
-// interface ApiResponse<T = any> {
-//   code: number
-//   data: T
-//   msg: string
-//   time: number
-// }
+interface ApiResponse<T = any> {
+  code: number
+  data: T
+  msg: string
+  time?: number
+}
 
-// type ApiPromise<T = any> = Promise<ApiResponse<T>>
+type ApiPromise<T = any> = Promise<ApiResponse<T>>

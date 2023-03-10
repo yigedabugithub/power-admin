@@ -30,7 +30,8 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       open: true,
       proxy: {
         [env.VITE_APP_BASE_API]: {
-          target: 'https://mock.mengxuegu.com/mock/636eff7ef22edd4bbbcd9919/mmServer',
+          target: 'http://127.0.0.1:3000',
+          // target: 'https://mock.mengxuegu.com/mock/636eff7ef22edd4bbbcd9919/mmServer',
           changeOrigin: true,
           rewrite: (path) => path.replace(new RegExp('^' + env.VITE_APP_BASE_API), '')
         }

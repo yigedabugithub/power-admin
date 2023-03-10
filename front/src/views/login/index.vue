@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { ElForm, ElInput } from 'element-plus'
 import { buildValidatorData } from '@/utils/validate'
+import { loginApi } from '@/api/user/index'
 
 const formRef = ref<InstanceType<typeof ElForm>>()
 const userNameRef = ref<InstanceType<typeof ElInput>>()
@@ -27,29 +28,24 @@ const rules = reactive({
 // 提交
 const onSubmit = (formEl: InstanceType<typeof ElForm> | undefined) => {
   if (!formEl) return
-  // formEl.validate((valid) => {
-  //   if (valid) {
-  //     form.loading = true
-  //     form.captcha_id = state.captchaId
-  //     login('post', form)
-  //       .then((res) => {
-  //         form.loading = false
-  //         adminInfo.dataFill(res.data.userInfo)
-  //         ElNotification({
-  //           message: res.msg,
-  //           type: 'success'
-  //         })
-  //         router.push({ path: res.data.routePath })
-  //       })
-  //       .catch(() => {
-  //         onChangeCaptcha()
-  //         form.loading = false
-  //       })
-  //   } else {
-  //     onChangeCaptcha()
-  //     return false
-  //   }
-  // })
+  formEl.validate((valid) => {
+    if (valid) {
+      form.loading = true
+      loginApi('post', form)
+        .then((res) => {
+          form.loading = false
+          // adminInfo.dataFill(res.data.userInfo)
+          ElNotification({
+            message: res.msg,
+            type: 'success'
+          })
+          // router.push({ path: res.data.routePath })
+        })
+        .catch(() => {
+          form.loading = false
+        })
+    }
+  })
 }
 </script>
 
@@ -110,7 +106,6 @@ const onSubmit = (formEl: InstanceType<typeof ElForm> | undefined) => {
 
 <style lang="scss" scoped>
 .page-login {
-  // background-color: #6286e8;
   overflow: hidden;
   background: url(@/assets/login/login-bg.png) repeat;
 
@@ -120,13 +115,16 @@ const onSubmit = (formEl: InstanceType<typeof ElForm> | undefined) => {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: rgba(000, 000, 000, 0.1);
     .login-box {
       display: flex;
       justify-content: center;
       align-items: center;
       width: 400px;
       height: 600px;
-      background-color: #ebeded;
+      background-color: #fff;
+      box-shadow: 0px 0px 5px #a0cfff;
+      border-radius: 10px;
       .form {
         width: 100%;
         padding: 20px 40px;

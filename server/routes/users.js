@@ -22,7 +22,7 @@ router.post('/login', async (ctx) => {
       const data = res._doc;
       const token = jwt.sign({ data }, 'power-admin', { expiresIn: '10h' })
       data.token = `Bearer ${token}`;
-      ctx.body = util.success(data)
+      ctx.body = util.success(data, '登录成功')
     } else {
       ctx.body = util.fail("账号或密码不正确")
     }
