@@ -1,23 +1,58 @@
 <script lang="ts" setup>
-import PoIcon from '@/components/PoIcon/index.vue'
+import { useConfig } from '@/stores/config'
+import Default from '@/layout/container/default.vue'
+import Classic from '@/layout/container/classic.vue'
+import Streamline from '@/layout/container/streamline.vue'
+import Double from '@/layout/container/double.vue'
+import { useSiteConfig } from '@/stores/siteConfig'
+import { useUserInfo } from '@/stores/userInfo'
+import { handleAdminRoute, routePush, getFirstRoute } from '@/utils/router'
+import { useRoute } from 'vue-router'
+import { isEmpty } from 'lodash-es'
+
+const route = useRoute()
+const userInfo = useUserInfo()
+const siteConfig = useSiteConfig()
+const config = useConfig()
+
+onMounted(() => {
+  init()
+})
+
+const init = () => {
+  index().then((res: any) => {
+    siteConfig.dataFill(res.data.siteConfig)
+    userInfo.dataFill(res.data.adminInfo)
+
+    if (res.data.menus) {
+      handleAdminRoute(res.data.menus)
+
+      // 预跳转到上次路径
+      if (route.params.to) {
+        const lastRoute = JSON.parse(route.params.to as string)
+        if (lastRoute.path != adminBaseRoute.path) {
+          let query = !isEmpty(lastRoute.query) ? lastRoute.query : {}
+          routePush({ path: lastRoute.path, query: query })
+          return
+        }
+      }
+
+      // 跳转到第一个菜单
+      let firstRoute = getFirstRoute(navTabs.state.tabsViewRoutes)
+      if (firstRoute) routePush(firstRoute.path)
+    }
+  })
+}
 </script>
-
+<!-- 只有在 components 选项中的组件可以被动态组件使用-->
+<script lang="ts">
+export default {
+  components: { Default, Classic, Streamline, Double }
+}
+</script>
 <template>
-  <div>layuot</div>
-  <div>
-    <!-- # font-awesome的图标，使用 fa 作为前缀（带个空格） -->
-    <PoIcon name="fa fa-pencil" />
-
-    <!-- # element-plus 的图标，使用 el-icon 作为前缀，图标名称请使用：首字母大写的驼峰语法 -->
-    <PoIcon name="el-icon-Close" color="#8595F4" size="20" />
-
-    <!-- # 本地`/web/src/assets/icons`文件夹内的SVG图标，使用 local 作为前缀，文件名作为后缀 文件自动加载，新增请重新编译 -->
-    <PoIcon name="local-logo" color="#8595F4" size="20" />
-    <PoIcon name="local-copyNumber" color="#8595F4" size="20" />
-
-    <!-- # 阿里iconfont的图标，使用 iconfont 作为前缀（带个空格） -->
-    <PoIcon name="iconfont icon-gerenxinxi" size="20" />
-  </div>
+  <!-- <component :is="config.layout.layoutMode"></component> -->
+  <Default></Default>
 </template>
 
 <style lang="scss" scoped></style>

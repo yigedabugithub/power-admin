@@ -1,6 +1,7 @@
 import PoIcon from '@/components/PoIcon/index.vue'
 import * as elIcons from '@element-plus/icons-vue'
 import type { App } from 'vue'
+import router from '@/router/index'
 
 /**
  * 是否是外部链接
@@ -41,4 +42,21 @@ export function loadJs(url: string): void {
   const link = document.createElement('script')
   link.src = url
   document.body.appendChild(link)
+}
+
+/**
+ * 是否在后台应用内
+ * @param path 不传递则通过当前路由 path 检查
+ */
+export const isAdminApp = (path = '') => {
+  if (path) {
+    return /^\/admin/.test(path)
+  }
+  if (
+    /^\/admin/.test(router.currentRoute.value.fullPath) ||
+    window.location.hash.indexOf('#/admin') === 0
+  ) {
+    return true
+  }
+  return false
 }
