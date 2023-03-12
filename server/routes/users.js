@@ -32,21 +32,99 @@ router.post('/login', async (ctx) => {
 })
 
 // 用户信息(info,menu)
-router.post('/userInfo', async (ctx) => {
+router.get('/userInfo', async (ctx) => {
+  let parts = ctx.request.header.authorization.split(' ');
+  let token = '';
+  let ndata = '';
   try {
-    const { _id } = ctx.request.body
-    const res = await User.findOne({ _id }, { passWord: 0 })
+    if (parts.length == 2) {
+      let scheme = parts[0];
+      let credentials = parts[1];
+      if (/^Bearer$/i.test(scheme)) {
+        token = credentials; //最终获取到token          
+      }
+    }
+
+    jwt.verify(token, 'power-admin', function (error, { data }) {
+      if (error) {
+        ctx.body = util.fail({}, 'token无效')
+        next()
+      }
+      if (data) { ndata = data }
+    })
+    const res = await User.findOne({ _id: ndata._id }, { passWord: 0 })
     if (res) {
-      const data = {
+      const userInfo = {
         info: res._doc,
-        menu: [],
+        menus: [
+          // {
+          //   "id": 1,
+          //   "pid": 0,
+          //   "type": "menu",
+          //   "title": "控制台",
+          //   "name": "dashboard/dashboard",
+          //   "path": "dashboard",
+          //   "icon": "fa fa-dashboard",
+          //   "menu_type": "tab",
+          //   "url": "",
+          //   "component": "Layout",
+          //   "keepalive": "admin/dashboard",
+          //   "extend": "none"
+          // },
+          {
+            "id": 2,
+            "pid": 0,
+            "type": "menu_dir",
+            "title": "权限管理",
+            "name": "system",
+            "path": "system",
+            "icon": "fa fa-group",
+            "menu_type": null,
+            "url": "",
+            "component": "",
+            "keepalive": 0,
+            "extend": "none",
+            "children": [
+              {
+                "id": 3,
+                "pid": 2,
+                "type": "menu",
+                "title": "角色组管理",
+                "name": "system/role",
+                "path": "/system/role",
+                "icon": "fa fa-role",
+                "menu_type": "tab",
+                "url": "",
+                "component": "/src/views/system/role/index.vue",
+                "keepalive": "system/role",
+                "extend": "none",
+
+              },
+
+              {
+                "id": 13,
+                "pid": 2,
+                "type": "menu",
+                "title": "菜单规则管理",
+                "name": "system/menu",
+                "path": "/system/menu",
+                "icon": "el-icon-Grid",
+                "menu_type": "tab",
+                "url": "",
+                "component": "/src/views/system/menu/index.vue",
+                "keepalive": "system/menu",
+                "extend": "none",
+              },
+
+            ]
+          },
+        ],
         siteConfig: {}
       }
-      ctx.body = util.success(data, 'success')
+      ctx.body = util.success(userInfo, 'success')
     }
-  }
-  catch (error) {
-    ctx.body = util.fail(error.msg)
+  } catch (e) {
+    next(e)
   }
 })
 

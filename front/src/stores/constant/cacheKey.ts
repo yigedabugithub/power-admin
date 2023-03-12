@@ -4,6 +4,7 @@
 
 // 管理员资料
 export const ADMIN_INFO = 'adminInfo'
+export const USER_INFO = 'userInfo'
 // WEB端布局配置
 export const STORE_CONFIG = 'storeConfig_v2'
 // 后台标签页

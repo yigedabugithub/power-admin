@@ -111,13 +111,13 @@ export const useNavTabs = defineStore(
  */
 function encodeRoutesURI(data: RouteRecordRaw[]) {
   data.forEach((item) => {
-    if (item.meta?.type == 'iframe') {
-      item.path = '/admin/iframe/' + encodeURIComponent(item.path)
-    }
+    // if (item.meta?.type == 'iframe') {
+    //   item.path = '/admin/iframe/' + encodeURIComponent(item.path)
+    // }
 
-    if (item.children && item.children.length) {
-      item.children = encodeRoutesURI(item.children)
-    }
+    // if (item.children && item.children.length) {
+    //   item.children = encodeRoutesURI(item.children)
+    // }
   })
   return data
 }

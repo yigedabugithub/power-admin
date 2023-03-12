@@ -10,8 +10,13 @@
 import axios from 'axios'
 import type { AxiosRequestConfig, AxiosPromise } from 'axios'
 import { ElLoading, LoadingOptions, ElNotification } from 'element-plus'
-// import useStore from '../store'
-import { localStorage } from '../utils/storage'
+import { useUserInfo } from '@/stores/userInfo'
+import { Local } from '@/utils/storage'
+import { useRoute } from 'vue-router'
+import { USER_INFO } from '@/stores/constant/cacheKey'
+
+const route = useRoute()
+const userInfo = useUserInfo()
 
 interface LoadingInstance {
   target: any
@@ -195,18 +200,17 @@ function createAxios(
       }
 
       // 自动携带token,无token退出
-      // const { user } = useStore()
-      // if (user?.token) {
-      //   config.headers['Authorization'] = `${localStorage.get('token')}`
-      // }
+      if (userInfo?.token) {
+        config.headers['Authorization'] = `${Local.get(USER_INFO).token}`
+      }
 
-      // if (!user?.token && route.path !== 'login') {
-      //   user.logout()
-      //   ElNotification({
-      //     type: 'error',
-      //     message: '无效token，请重新登录'
-      //   })
-      // }
+      if (!userInfo?.token && route.path !== 'login') {
+        userInfo.logout()
+        ElNotification({
+          type: 'error',
+          message: 'token无效，请重新登录'
+        })
+      }
 
       return config
     },
@@ -218,8 +222,6 @@ function createAxios(
   // 响应拦截
   Axios.interceptors.response.use(
     (response) => {
-      // console.log(response,'response***-');
-
       removePending(response.config)
       options.loading && closeLoading(options) // 关闭loading
 

@@ -9,6 +9,8 @@ import { useUserInfo } from '@/stores/userInfo'
 import { handleAdminRoute, routePush, getFirstRoute } from '@/utils/router'
 import { useRoute } from 'vue-router'
 import { isEmpty } from 'lodash-es'
+import { userInfoApi } from '@/api/user/index'
+import router from '@/router'
 
 const route = useRoute()
 const userInfo = useUserInfo()
@@ -17,30 +19,14 @@ const config = useConfig()
 
 onMounted(() => {
   init()
+  console.log(router, '/////////////////------------***********---------')
 })
 
 const init = () => {
-  index().then((res: any) => {
+  userInfoApi().then((res) => {
     siteConfig.dataFill(res.data.siteConfig)
-    userInfo.dataFill(res.data.adminInfo)
-
-    if (res.data.menus) {
-      handleAdminRoute(res.data.menus)
-
-      // 预跳转到上次路径
-      if (route.params.to) {
-        const lastRoute = JSON.parse(route.params.to as string)
-        if (lastRoute.path != adminBaseRoute.path) {
-          let query = !isEmpty(lastRoute.query) ? lastRoute.query : {}
-          routePush({ path: lastRoute.path, query: query })
-          return
-        }
-      }
-
-      // 跳转到第一个菜单
-      let firstRoute = getFirstRoute(navTabs.state.tabsViewRoutes)
-      if (firstRoute) routePush(firstRoute.path)
-    }
+    userInfo.dataFill(res.data.info)
+    if (res.data.menus) handleAdminRoute(res.data.menus)
   })
 }
 </script>

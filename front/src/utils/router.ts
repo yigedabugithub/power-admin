@@ -7,6 +7,7 @@ import {
 } from 'vue-router'
 import { ElNotification } from 'element-plus'
 import { useConfig } from '@/stores/config'
+import { useNavTabs } from '@/stores/navTabs'
 
 /**
  * 导航失败有错误消息的路由push
@@ -85,10 +86,15 @@ export const getFirstRoute = (routes: RouteRecordRaw[]): false | RouteRecordRaw 
  * 处理后台的路由
  */
 export const handleAdminRoute = (routes: any) => {
-  const viewsComponent = import.meta.glob('/src/views/backend/**/*.vue')
-  addRouteAll(viewsComponent, routes, adminBaseRoute.name as string)
-  const menuAdminBaseRoute = '/' + (adminBaseRoute.name as string) + '/'
-  const menuRule = handleMenuRule(routes, menuAdminBaseRoute, menuAdminBaseRoute)
+  const viewsComponent = import.meta.glob('/src/views/**/*.vue')
+  addRouteAll(viewsComponent, routes, 'admin')
+  const menuRule = handleMenuRule(routes)
+  console.log(router, '**********************router')
+
+  // console.log(menuRule,'menuRule*******************');
+
+  // const menuAdminBaseRoute = '/' + (adminBaseRoute.name as string) + '/'
+  // const menuRule = handleMenuRule(routes, menuAdminBaseRoute, menuAdminBaseRoute)
 
   // 更新stores中的路由菜单数据
   const navTabs = useNavTabs()
@@ -98,7 +104,7 @@ export const handleAdminRoute = (routes: any) => {
 /**
  * 菜单处理
  */
-const handleMenuRule = (routes: any, pathPrefix = '/', parent = '/', module = 'admin') => {
+const handleMenuRule = (routes: any, pathPrefix = '', parent = '/', module = 'admin') => {
   const menuRule: RouteRecordRaw[] = []
   const authNode: string[] = []
   for (const key in routes) {
@@ -134,15 +140,15 @@ const handleMenuRule = (routes: any, pathPrefix = '/', parent = '/', module = 'a
       authNode.push(pathPrefix + routes[key].name)
     }
   }
-  if (authNode.length) {
-    if (module == 'admin') {
-      const navTabs = useNavTabs()
-      navTabs.setAuthNode(parent, authNode)
-    } else if (module == 'user') {
-      const memberCenter = useMemberCenter()
-      memberCenter.setAuthNode(parent, authNode)
-    }
-  }
+  // if (authNode.length) {
+  //   if (module == 'admin') {
+  //     const navTabs = useNavTabs()
+  //     navTabs.setAuthNode(parent, authNode)
+  //   } else if (module == 'user') {
+  //     const memberCenter = useMemberCenter()
+  //     memberCenter.setAuthNode(parent, authNode)
+  //   }
+  // }
   return menuRule
 }
 
@@ -182,13 +188,16 @@ export const addRouteItem = (
 ) => {
   let path = '',
     component
-  if (route.menu_type == 'iframe') {
-    path = (isAdminApp() ? '/admin' : '/user') + '/iframe/' + encodeURIComponent(route.url)
-    component = () => import('@/layouts/common/router-view/iframe.vue')
-  } else {
-    path = parentName ? route.path : '/' + route.path
-    component = viewsComponent[route.component]
-  }
+  // if (route.menu_type == 'iframe') {
+  //   path = (isAdminApp() ? '/admin' : '/user') + '/iframe/' + encodeURIComponent(route.url)
+  //   // component = () => import('@/layouts/common/router-view/iframe.vue')
+  // } else {
+  //   path = parentName ? route.path : '/' + route.path
+  //   component = viewsComponent[route.component]
+  // }
+  path = parentName ? route.path : '/' + route.path
+
+  component = viewsComponent[route.component]
   const routeBaseInfo: RouteRecordRaw = {
     path: path,
     name: route.name,
@@ -204,9 +213,12 @@ export const addRouteItem = (
       addtab: true
     }
   }
-  if (parentName) {
-    router.addRoute(parentName, routeBaseInfo)
-  } else {
-    router.addRoute(routeBaseInfo)
-  }
+  // if (parentName) {
+  //   router.addRoute(parentName, routeBaseInfo)
+  //   console.log(router, '*************************path')
+  // } else {
+  //   router.addRoute(routeBaseInfo)
+  // }
+  router.addRoute(routeBaseInfo)
+  console.log(router, parentName, routeBaseInfo, '*************************addRoute')
 }

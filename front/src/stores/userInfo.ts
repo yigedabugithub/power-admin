@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ADMIN_INFO } from '@/stores/constant/cacheKey'
+import { USER_INFO } from '@/stores/constant/cacheKey'
 import { UserInfo } from '@/stores/interface'
 // import { postLogout } from '@/api/frontend/user/index'
 import { Local } from '@/utils/storage'
@@ -8,7 +8,7 @@ import router from '../router'
 export const useUserInfo = defineStore('userInfo', {
   state: (): UserInfo => {
     return {
-      id: 0,
+      _id: 0,
       username: '',
       nickname: '',
       email: '',
@@ -32,7 +32,7 @@ export const useUserInfo = defineStore('userInfo', {
       this.refreshToken = ''
     },
     dataFill(state: UserInfo) {
-      this.$state = state
+      this.$state = { ...this.$state, ...state }
     },
     setToken(token: string, type: 'token' | 'refreshToken') {
       this[type] = token
@@ -53,18 +53,23 @@ export const useUserInfo = defineStore('userInfo', {
       return icon
     },
     logout() {
-      //   postLogout().then((res:any) => {
-      //     if (res.code == 1) {
-      //       Local.remove(ADMIN_INFO)
-      //       router.go(0)
-      //     }
-      //   })
+      // postLogout().then((res:any) => {
+      //   if (res.code == 1) {
+      //     Local.remove(USER_INFO)
+      //     router.go(0)
+      //   }
+      // })
+
+      Local.remove(USER_INFO)
+      router.go(0)
     },
     isLogin() {
-      return this.id && this.token
+      return this._id && this.token
     }
   },
   persist: {
-    key: ADMIN_INFO
+    // enabled: true,
+    key: USER_INFO
+    // storage: sessionStorage
   }
 })

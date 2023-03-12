@@ -36,7 +36,7 @@ export interface AdminInfo {
 }
 
 export interface UserInfo {
-  id: number
+  _id: number
   username: string
   nickname: string
   email: string

@@ -1,7 +1,12 @@
 <script lang="ts" setup>
-import type { ElForm, ElInput } from 'element-plus'
+import { ElForm, ElInput, ElNotification } from 'element-plus'
 import { buildValidatorData } from '@/utils/validate'
 import { loginApi } from '@/api/user/index'
+import router from '@/router'
+import { useUserInfo } from '@/stores/userInfo'
+import { Local } from '@/utils/storage'
+
+const userInfo = useUserInfo()
 
 const formRef = ref<InstanceType<typeof ElForm>>()
 const userNameRef = ref<InstanceType<typeof ElInput>>()
@@ -31,15 +36,16 @@ const onSubmit = (formEl: InstanceType<typeof ElForm> | undefined) => {
   formEl.validate((valid) => {
     if (valid) {
       form.loading = true
-      loginApi('post', form)
+      loginApi(form)
         .then((res) => {
           form.loading = false
-          // adminInfo.dataFill(res.data.userInfo)
+          userInfo.dataFill(res.data)
+          // Local.set('userInfo', res.data)
           ElNotification({
             message: res.msg,
             type: 'success'
           })
-          // router.push({ path: res.data.routePath })
+          router.push({ path: '/dashboard' })
         })
         .catch(() => {
           form.loading = false
