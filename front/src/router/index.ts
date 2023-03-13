@@ -17,16 +17,34 @@ export const constantRoutes: Array<RouteRecordRaw> = [
     path: '/admin',
     name: 'admin',
     component: Layout,
-    redirect: '/admin/dashboard',
+    redirect: '/admin/loading',
     meta: { title: 'dashboard' },
     children: [
       {
-        path: 'dashboard',
-        name: 'Dashboard',
-        component: () => import('@/views/dashboard/index.vue')
-      },
-
+        path: 'loading/:to?',
+        name: 'adminMainLoading',
+        component: () => import('@/components/common/loading.vue'),
+        meta: {
+          title: 'Loading'
+        }
+      }
     ]
+  },
+
+  {
+    // 后台找不到页面了-可能是路由未加载上
+    path: '/admin:path(.*)*',
+    redirect: (to) => {
+      return {
+        name: 'adminMainLoading',
+        params: {
+          to: JSON.stringify({
+            path: to.path,
+            query: to.query
+          })
+        }
+      }
+    }
   },
 
   {
@@ -34,8 +52,16 @@ export const constantRoutes: Array<RouteRecordRaw> = [
     component: () => import('@/views/login/index.vue')
   },
   {
+    path: '/:path(.*)*',
+    redirect: '/404'
+  },
+  {
     path: '/404',
-    component: () => import('@/views/common/errorPage/404.vue')
+    name: 'notFound',
+    component: () => import('@/views/common/errorPage/404.vue'),
+    meta: {
+      title: 'notFound' // 页面不存在
+    }
   },
   {
     path: '/401',
@@ -49,6 +75,12 @@ const router = createRouter({
   routes: constantRoutes as RouteRecordRaw[],
   // 刷新时，滚动条位置还原
   scrollBehavior: () => ({ left: 0, top: 0 })
+})
+
+router.beforeEach((to, from, next) => {
+  // console.log(to, from, 'to, from')
+
+  next()
 })
 
 export default router

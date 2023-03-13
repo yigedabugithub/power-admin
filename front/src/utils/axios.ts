@@ -12,10 +12,8 @@ import type { AxiosRequestConfig, AxiosPromise } from 'axios'
 import { ElLoading, LoadingOptions, ElNotification } from 'element-plus'
 import { useUserInfo } from '@/stores/userInfo'
 import { Local } from '@/utils/storage'
-import { useRoute } from 'vue-router'
 import { USER_INFO } from '@/stores/constant/cacheKey'
 
-const route = useRoute()
 const userInfo = useUserInfo()
 
 interface LoadingInstance {

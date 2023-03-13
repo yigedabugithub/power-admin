@@ -88,10 +88,9 @@ export const getFirstRoute = (routes: RouteRecordRaw[]): false | RouteRecordRaw 
 export const handleAdminRoute = (routes: any) => {
   const viewsComponent = import.meta.glob('/src/views/**/*.vue')
   addRouteAll(viewsComponent, routes, 'admin')
-  const menuRule = handleMenuRule(routes)
+  const menuRule = handleMenuRule(routes, '/admin/', '/admin/')
 
-  console.log(menuRule,'menuRule*******************');
-
+  console.log(menuRule, 'menuRule*******************')
   // const menuAdminBaseRoute = '/' + (adminBaseRoute.name as string) + '/'
   // const menuRule = handleMenuRule(routes, menuAdminBaseRoute, menuAdminBaseRoute)
 
@@ -134,20 +133,9 @@ const handleMenuRule = (routes: any, pathPrefix = '', parent = '/', module = 'ad
         },
         children: children
       })
-    } else {
-      // 权限节点
-      authNode.push(pathPrefix + routes[key].name)
     }
   }
-  // if (authNode.length) {
-  //   if (module == 'admin') {
-  //     const navTabs = useNavTabs()
-  //     navTabs.setAuthNode(parent, authNode)
-  //   } else if (module == 'user') {
-  //     const memberCenter = useMemberCenter()
-  //     memberCenter.setAuthNode(parent, authNode)
-  //   }
-  // }
+
   return menuRule
 }
 

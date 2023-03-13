@@ -6,8 +6,18 @@ import router from './router'
 import { registerIcons } from '@/utils/common'
 import '@/styles/index.scss'
 import pinia from '@/stores/index'
+import mitt from 'mitt'
+import locale from 'element-plus/lib/locale/lang/zh-cn' //中文
 
-const app = createApp(App)
-registerIcons(app) // icons
-
-app.use(router).use(ElementPlus).use(pinia).mount('#app')
+async function start() {
+  const app = createApp(App)
+  app.use(pinia)
+  app.use(router)
+  app.use(ElementPlus, { locale })
+  // 全局注册
+  // directives(app) // 指令
+  registerIcons(app) // icons
+  app.mount('#app')
+  app.config.globalProperties.eventBus = mitt()
+}
+start()

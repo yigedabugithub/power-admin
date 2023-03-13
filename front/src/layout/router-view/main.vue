@@ -11,13 +11,16 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
-import { useConfig } from '@/stores/config'
+import { useRoute, RouteLocationNormalized } from 'vue-router'
 
+import { useConfig } from '@/stores/config'
+import useCurrentInstance from '@/utils/useCurrentInstance'
+
+const { proxy } = useCurrentInstance()
 const route = useRoute()
 const config = useConfig()
 
-const state: {componentKey: string} = reactive({
+const state: { componentKey: string } = reactive({
   componentKey: route.path
 })
 

@@ -14,25 +14,29 @@
 
 <script setup lang="ts">
 import { onUnmounted, reactive } from 'vue'
-import router from '@/router/index'
 import { useNavTabs } from '@/stores/navTabs'
 import { isAdminApp } from '@/utils/common'
 import { getFirstRoute, routePush } from '@/utils/router'
+import { useRoute, useRouter } from 'vue-router'
 
 let timer: NodeJS.Timer
 
 const navTabs = useNavTabs()
+const route = useRoute()
+const router = useRouter()
+const { query } = route
+const pathh = JSON.parse(route.params.to).path
+
 const state = reactive({
   maximumWait: 1000 * 6,
   showReload: false
 })
 
-const refresh = () => {
-  router.go(0)
-}
-
 if (isAdminApp() && navTabs.state.tabsViewRoutes) {
-  // router.replace({ path: '/admin/dashboard' })
+  setTimeout(() => {
+    console.log(pathh, '***route.fullPath')
+    router.replace({ path: pathh, query })
+  }, 100)
 
   // routePush('/admin/dashboard')
   // let firstRoute = getFirstRoute(navTabs.state.tabsViewRoutes)
