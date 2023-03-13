@@ -9,7 +9,6 @@ import { useConfig } from '@/stores/config'
 import MenuVertical from '@/layout/components/menus/menuVertical.vue'
 
 const config = useConfig()
-const menuWidth = computed(() => config.menuWidth())
 </script>
 
 <script lang="ts">

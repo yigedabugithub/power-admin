@@ -19,7 +19,6 @@ const config = useConfig()
 
 onMounted(() => {
   init()
-  console.log(router, '/////////////////------------***********---------')
 })
 
 const init = () => {

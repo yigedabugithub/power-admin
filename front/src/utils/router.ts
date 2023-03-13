@@ -89,9 +89,8 @@ export const handleAdminRoute = (routes: any) => {
   const viewsComponent = import.meta.glob('/src/views/**/*.vue')
   addRouteAll(viewsComponent, routes, 'admin')
   const menuRule = handleMenuRule(routes)
-  console.log(router, '**********************router')
 
-  // console.log(menuRule,'menuRule*******************');
+  console.log(menuRule,'menuRule*******************');
 
   // const menuAdminBaseRoute = '/' + (adminBaseRoute.name as string) + '/'
   // const menuRule = handleMenuRule(routes, menuAdminBaseRoute, menuAdminBaseRoute)
@@ -196,7 +195,6 @@ export const addRouteItem = (
   //   component = viewsComponent[route.component]
   // }
   path = parentName ? route.path : '/' + route.path
-
   component = viewsComponent[route.component]
   const routeBaseInfo: RouteRecordRaw = {
     path: path,
@@ -213,12 +211,9 @@ export const addRouteItem = (
       addtab: true
     }
   }
-  // if (parentName) {
-  //   router.addRoute(parentName, routeBaseInfo)
-  //   console.log(router, '*************************path')
-  // } else {
-  //   router.addRoute(routeBaseInfo)
-  // }
-  router.addRoute(routeBaseInfo)
-  console.log(router, parentName, routeBaseInfo, '*************************addRoute')
+  if (parentName) {
+    router.addRoute(parentName, routeBaseInfo)
+  } else {
+    router.addRoute(routeBaseInfo)
+  }
 }

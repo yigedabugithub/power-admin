@@ -3,10 +3,10 @@
     <template v-if="menu.children && menu.children.length > 0">
       <el-sub-menu :index="menu.path" :key="menu.path">
         <template #title>
-          <Icon
+          <!-- <Icon
             :color="config.getColorVal('menuColor')"
             :name="menu.meta?.icon ? menu.meta?.icon : config.layout.menuDefaultIcon"
-          />
+          /> -->
           <span>{{ menu.meta?.title ? menu.meta?.title : 'noTitle' }}</span>
         </template>
         <menu-tree :menus="menu.children"></menu-tree>
@@ -14,10 +14,10 @@
     </template>
     <template v-else>
       <el-menu-item :index="menu.path" :key="menu.path" @click="onClickMenu(menu)">
-        <Icon
+        <!-- <Icon
           :color="config.getColorVal('menuColor')"
           :name="menu.meta?.icon ? menu.meta?.icon : config.layout.menuDefaultIcon"
-        />
+        /> -->
         <span>{{ menu.meta?.title ? menu.meta?.title : 'noTitle' }}</span>
       </el-menu-item>
     </template>

@@ -1,6 +1,6 @@
 <template>
   <el-header class="layout-header">
-    <div>Header</div>
+    <div style="height: 50px; background-color: #b1b1b1">Header</div>
     <!-- <component :is="config.layout.layoutMode + 'NavBar'"></component> -->
   </el-header>
 </template>

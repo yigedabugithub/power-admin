@@ -57,20 +57,20 @@ router.get('/userInfo', async (ctx) => {
       const userInfo = {
         info: res._doc,
         menus: [
-          // {
-          //   "id": 1,
-          //   "pid": 0,
-          //   "type": "menu",
-          //   "title": "控制台",
-          //   "name": "dashboard/dashboard",
-          //   "path": "dashboard",
-          //   "icon": "fa fa-dashboard",
-          //   "menu_type": "tab",
-          //   "url": "",
-          //   "component": "Layout",
-          //   "keepalive": "admin/dashboard",
-          //   "extend": "none"
-          // },
+          {
+            "id": 1,
+            "pid": 0,
+            "type": "menu",
+            "title": "控制台",
+            "name": "dashboard/dashboard",
+            "path": "/admin/dashboard",
+            "icon": "fa fa-dashboard",
+            "menu_type": "tab",
+            "url": "",
+            "component": "/src/views/dashboard/index.vue",
+            "keepalive": "admin/dashboard",
+            "extend": "none"
+          },
           {
             "id": 2,
             "pid": 0,
@@ -91,7 +91,7 @@ router.get('/userInfo', async (ctx) => {
                 "type": "menu",
                 "title": "角色组管理",
                 "name": "system/role",
-                "path": "/system/role",
+                "path": "/admin/system/role",
                 "icon": "fa fa-role",
                 "menu_type": "tab",
                 "url": "",
@@ -107,7 +107,7 @@ router.get('/userInfo', async (ctx) => {
                 "type": "menu",
                 "title": "菜单规则管理",
                 "name": "system/menu",
-                "path": "/system/menu",
+                "path": "/admin/system/menu",
                 "icon": "el-icon-Grid",
                 "menu_type": "tab",
                 "url": "",

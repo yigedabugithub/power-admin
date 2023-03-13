@@ -17,12 +17,8 @@ import { useConfig } from '@/stores/config'
 const route = useRoute()
 const config = useConfig()
 
-const state: {
-  componentKey: string
-  keepAliveComponentNameList: string[]
-} = reactive({
-  componentKey: route.path,
-  keepAliveComponentNameList: []
+const state: {componentKey: string} = reactive({
+  componentKey: route.path
 })
 
 watch(

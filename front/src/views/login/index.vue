@@ -4,7 +4,6 @@ import { buildValidatorData } from '@/utils/validate'
 import { loginApi } from '@/api/user/index'
 import router from '@/router'
 import { useUserInfo } from '@/stores/userInfo'
-import { Local } from '@/utils/storage'
 
 const userInfo = useUserInfo()
 
@@ -40,12 +39,11 @@ const onSubmit = (formEl: InstanceType<typeof ElForm> | undefined) => {
         .then((res) => {
           form.loading = false
           userInfo.dataFill(res.data)
-          // Local.set('userInfo', res.data)
           ElNotification({
             message: res.msg,
             type: 'success'
           })
-          router.push({ path: '/dashboard' })
+          router.push({ path: '/admin/dashboard' })
         })
         .catch(() => {
           form.loading = false

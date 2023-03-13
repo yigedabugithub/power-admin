@@ -204,13 +204,13 @@ function createAxios(
         config.headers['Authorization'] = `${Local.get(USER_INFO).token}`
       }
 
-      if (!userInfo?.token && route.path !== 'login') {
-        userInfo.logout()
-        ElNotification({
-          type: 'error',
-          message: 'token无效，请重新登录'
-        })
-      }
+      // if (!userInfo?.token && route.path !== 'login') {
+      //   userInfo.logout()
+      //   ElNotification({
+      //     type: 'error',
+      //     message: 'token无效，请重新登录'
+      //   })
+      // }
 
       return config
     },
