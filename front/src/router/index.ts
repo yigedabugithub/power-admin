@@ -23,7 +23,7 @@ export const constantRoutes: Array<RouteRecordRaw> = [
       {
         path: 'loading/:to?',
         name: 'adminMainLoading',
-        component: () => import('@/components/common/loading.vue'),
+        component: () => import('@/layout/components/common/loading.vue'),
         meta: {
           title: 'Loading'
         }

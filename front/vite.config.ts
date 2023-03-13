@@ -4,6 +4,7 @@ import path from 'path'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import { svgBuilder } from './src/components/PaIcon/svg'
 
 export default ({ command, mode }: ConfigEnv): UserConfig => {
   const env = loadEnv(mode, process.cwd())
@@ -11,6 +12,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
   return {
     plugins: [
       vue(),
+      svgBuilder('./src/assets/icons/'),
       AutoImport({
         resolvers: [ElementPlusResolver()],
         include: [/\.[tj]sx?$/, /\.vue$/, /\.vue\?vue/, /\.md$/],

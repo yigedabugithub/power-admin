@@ -9,26 +9,22 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    DarkSwitch: typeof import('./src/components/common/components/darkSwitch.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
     ElContainer: typeof import('element-plus/es')['ElContainer']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElHeader: typeof import('element-plus/es')['ElHeader']
-    ElIcon: typeof import('element-plus/es')['ElIcon']
     ElMain: typeof import('element-plus/es')['ElMain']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
-    ElMenuItemGroup: typeof import('element-plus/es')['ElMenuItemGroup']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
-    Iframe: typeof import('./src/components/common/router-view/iframe.vue')['default']
     Loading: typeof import('./src/components/common/loading.vue')['default']
-    PoIcon: typeof import('./src/components/PoIcon/index.vue')['default']
+    PaIcon: typeof import('./src/components/PaIcon/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    Svg: typeof import('./src/components/PoIcon/svg/index.vue')['default']
+    Svg: typeof import('./src/components/PaIcon/svg/index.vue')['default']
   }
   export interface ComponentCustomProperties {
     vLoading: typeof import('element-plus/es')['ElLoadingDirective']

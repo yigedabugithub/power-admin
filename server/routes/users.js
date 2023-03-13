@@ -92,7 +92,7 @@ router.get('/userInfo', async (ctx) => {
                 "title": "角色组管理",
                 "name": "system/role",
                 "path": "system/role",
-                "icon": "fa fa-role",
+                "icon": "fa fa-group",
                 "menu_type": "tab",
                 "url": "",
                 "component": "/src/views/system/role/index.vue",

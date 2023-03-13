@@ -5,10 +5,8 @@
 </template>
 
 <script setup lang="ts">
-import { useConfig } from '@/stores/config'
 import MenuVertical from '@/layout/components/menus/menuVertical.vue'
 
-const config = useConfig()
 </script>
 
 <script lang="ts">

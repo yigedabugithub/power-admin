@@ -1,7 +1,6 @@
 <template>
   <el-header class="layout-header">
     <div style="height: 50px; background-color: #b1b1b1">Header</div>
-    <!-- <component :is="config.layout.layoutMode + 'NavBar'"></component> -->
   </el-header>
 </template>
 <script setup lang="ts"></script>
@@ -10,7 +9,6 @@
 import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'layout/header'
-  // components: { DefaultNavBar, ClassicNavBar, StreamlineNavBar, DoubleNavBar },
 })
 </script>
 

@@ -16,7 +16,6 @@
 import { onUnmounted, reactive } from 'vue'
 import { useNavTabs } from '@/stores/navTabs'
 import { isAdminApp } from '@/utils/common'
-import { getFirstRoute, routePush } from '@/utils/router'
 import { useRoute, useRouter } from 'vue-router'
 
 let timer: NodeJS.Timer
@@ -37,17 +36,15 @@ if (isAdminApp() && navTabs.state.tabsViewRoutes) {
     console.log(pathh, '***route.fullPath')
     router.replace({ path: pathh, query })
   }, 100)
-
-  // routePush('/admin/dashboard')
-  // let firstRoute = getFirstRoute(navTabs.state.tabsViewRoutes)
-
-  // if (firstRoute) routePush(firstRoute.path)
 }
 
 timer = setTimeout(() => {
   state.showReload = true
 }, state.maximumWait)
 
+const refresh = () => {
+  router.go(0)
+}
 onUnmounted(() => {
   clearTimeout(timer)
 })

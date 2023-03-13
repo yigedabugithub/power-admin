@@ -1,4 +1,4 @@
-import PoIcon from '@/components/PoIcon/index.vue'
+import PaIcon from '@/components/PaIcon/index.vue'
 import * as elIcons from '@element-plus/icons-vue'
 import type { App } from 'vue'
 import router from '@/router/index'
@@ -12,7 +12,7 @@ export function isExternal(path: string): boolean {
 }
 
 export function registerIcons(app: App) {
-  app.component('PoIcon', PoIcon)
+  app.component('PaIcon', PaIcon)
   /*
    * 全局注册element Plus的icon
    */

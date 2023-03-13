@@ -1,10 +1,10 @@
 <script lang="ts">
 import { createVNode, resolveComponent, defineComponent, computed, CSSProperties } from 'vue'
-import svg from '@/components/PoIcon/svg/index.vue'
+import svg from '@/components/PaIcon/svg/index.vue'
 import { isExternal } from '@/utils/common'
 
 export default defineComponent({
-  name: 'PoIcon',
+  name: 'PaIcon',
   props: {
     name: {
       type: String,
