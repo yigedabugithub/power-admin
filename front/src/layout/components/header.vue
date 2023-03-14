@@ -1,14 +1,23 @@
 <template>
   <el-header class="layout-header">
-    <div style="height: 50px; background-color: #b1b1b1">Header</div>
+    <component :is="config.layout.layoutMode + 'NavBar'"></component>
   </el-header>
 </template>
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useConfig } from '@/stores/config'
+import DefaultNavBar from '@/layout/components/navBar/default.vue'
+import ClassicNavBar from '@/layout/components/navBar/classic.vue'
+// import StreamlineNavBar from '@/layout/components/menus/menuHorizontal.vue'
+import DoubleNavBar from '@/layout/components/navBar/double.vue'
+
+const config = useConfig()
+</script>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 export default defineComponent({
-  name: 'layout/header'
+  name: 'layout/header',
+  components: { DefaultNavBar, ClassicNavBar, DoubleNavBar }
 })
 </script>
 

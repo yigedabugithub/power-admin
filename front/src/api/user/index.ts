@@ -7,6 +7,13 @@ export function loginApi(data: anyObj = {}): ApiPromise {
     data
   }) as ApiPromise
 }
+export function logoutApi(data: anyObj = {}): ApiPromise {
+  return createAxios({
+    url: 'api/users/logout',
+    method: 'post',
+    data
+  }) as ApiPromise
+}
 export function userInfoApi(data: anyObj = {}): ApiPromise {
   return createAxios({
     url: 'api/users/userInfo',

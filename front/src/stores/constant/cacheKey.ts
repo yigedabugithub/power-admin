@@ -11,3 +11,5 @@ export const STORE_TAB_VIEW_CONFIG = 'storeTabViewConfig'
 
 // 切换到手机端前的上次布局方式
 export const BEFORE_RESIZE_LAYOUT = 'beforeResizeLayout'
+// ba官网用户信息
+export const BA_ACCOUNT = 'ba_account'

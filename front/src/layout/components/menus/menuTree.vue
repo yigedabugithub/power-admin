@@ -5,7 +5,7 @@
         <template #title>
           <PaIcon
             :color="config.getColorVal('menuColor')"
-            :name="menu.meta?.icon ? menu.meta?.icon : config.layout.menuDefaultIcon"
+            :name="menu.meta?.icon ?? config.layout.menuDefaultIcon"
           />
           <span>{{ menu.meta?.title ? menu.meta?.title : 'noTitle' }}</span>
         </template>
@@ -16,7 +16,7 @@
       <el-menu-item :index="menu.path" :key="menu.path" @click="onClickMenu(menu)">
         <PaIcon
           :color="config.getColorVal('menuColor')"
-          :name="menu.meta?.icon ? menu.meta?.icon : config.layout.menuDefaultIcon"
+          :name="menu.meta?.icon ?? config.layout.menuDefaultIcon"
         />
         <span>{{ menu.meta?.title ? menu.meta?.title : 'noTitle' }}</span>
       </el-menu-item>

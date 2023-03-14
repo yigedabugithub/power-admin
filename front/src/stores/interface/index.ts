@@ -52,6 +52,7 @@ export interface UserInfo {
   motto: string
   token: string
   refreshToken: string
+  super: boolean
 }
 
 export interface SiteConfig {

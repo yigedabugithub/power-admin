@@ -23,7 +23,8 @@ export const useUserInfo = defineStore('userInfo', {
       jointime: '',
       motto: '',
       token: '',
-      refreshToken: ''
+      refreshToken: '',
+      super: false
     }
   },
   actions: {
