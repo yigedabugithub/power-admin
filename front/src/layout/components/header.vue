@@ -7,7 +7,6 @@
 import { useConfig } from '@/stores/config'
 import DefaultNavBar from '@/layout/components/navBar/default.vue'
 import ClassicNavBar from '@/layout/components/navBar/classic.vue'
-// import StreamlineNavBar from '@/layout/components/menus/menuHorizontal.vue'
 import DoubleNavBar from '@/layout/components/navBar/double.vue'
 
 const config = useConfig()

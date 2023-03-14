@@ -8,7 +8,7 @@
 <script setup lang="ts">
 import { useConfig } from '@/stores/config'
 import NavTabs from '@/layout/components/navBar/tabs.vue'
-import NavMenus from '../navMenus.vue'
+import NavMenus from './navMenus.vue'
 
 const config = useConfig()
 </script>

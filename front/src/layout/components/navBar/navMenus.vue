@@ -1,5 +1,6 @@
 <template>
   <div class="nav-menus" :class="configStore.layout.layoutMode">
+    <!-- home -->
     <router-link class="h100" target="_blank" title="Home" to="/">
       <div class="nav-menu-item">
         <PaIcon
@@ -10,35 +11,6 @@
         />
       </div>
     </router-link>
-    <el-dropdown
-      @visible-change="onCurrentNavMenu($event, 'lang')"
-      class="h100"
-      size="large"
-      :hide-timeout="50"
-      placement="bottom"
-      trigger="click"
-      :hide-on-click="true"
-    >
-      <div class="nav-menu-item pt2" :class="state.currentNavMenu == 'lang' ? 'hover' : ''">
-        <PaIcon
-          :color="configStore.getColorVal('headerBarTabColor')"
-          class="nav-menu-icon"
-          name="local-lang"
-          size="18"
-        />
-      </div>
-      <template #dropdown>
-        <el-dropdown-menu class="dropdown-menu-box">
-          <!-- <el-dropdown-item
-            v-for="item in configStore.lang.langArray"
-            :key="item.name"
-            @click="editDefaultLang(item.name)"
-          >
-            {{ item.value }}
-          </el-dropdown-item> -->
-        </el-dropdown-menu>
-      </template>
-    </el-dropdown>
 
     <el-dropdown
       v-if="userInfo.super"
@@ -100,8 +72,8 @@
           </div>
         </div>
         <div class="admin-info-footer">
-          <el-button @click="onAdminInfo" type="primary" plain>layouts.personal data</el-button>
-          <el-button @click="onLogout" type="danger" plain>layouts.cancellation</el-button>
+          <el-button @click="onUserInfo" type="primary" plain>个人资料</el-button>
+          <el-button @click="onLogout" type="danger" plain>退出</el-button>
         </div>
       </div>
     </el-popover>
@@ -119,7 +91,7 @@
 
 <script lang="ts" setup>
 import { useConfig } from '@/stores/config'
-import Config from './config.vue'
+import Config from '../config.vue'
 import { useUserInfo } from '@/stores/userInfo'
 import { Local, Session } from '@/utils/storage'
 import { USER_INFO, BA_ACCOUNT } from '@/stores/constant/cacheKey'
@@ -141,8 +113,8 @@ const onCurrentNavMenu = (status: boolean, name: string) => {
   state.currentNavMenu = status ? name : ''
 }
 
-const onAdminInfo = () => {
-  routePush({ name: 'routine/adminInfo' })
+const onUserInfo = () => {
+  routePush({ name: 'routine/userInfo' })
 }
 
 const onLogout = () => {

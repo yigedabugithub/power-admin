@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import Aside from '@/layout/components/aside.vue'
 import Header from '@/layout/components/header.vue'
-import Main from '@/layout/router-view/main.vue'
+import Main from '@/layout/components/main.vue'
 </script>
 
 <style scoped>
