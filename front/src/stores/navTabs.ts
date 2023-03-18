@@ -101,7 +101,7 @@ export const useNavTabs = defineStore(
   {
     persist: {
       key: STORE_TAB_VIEW_CONFIG,
-      // paths: ['tabFullScreen']
+      paths: ['tabFullScreen']
     }
   }
 )
@@ -114,7 +114,6 @@ function encodeRoutesURI(data: RouteRecordRaw[]) {
     // if (item.meta?.type == 'iframe') {
     //   item.path = '/admin/iframe/' + encodeURIComponent(item.path)
     // }
-
     // if (item.children && item.children.length) {
     //   item.children = encodeRoutesURI(item.children)
     // }

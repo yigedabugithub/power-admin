@@ -23,9 +23,8 @@ body,
   overflow: hidden;
   position: relative;
 }
-
-body {
-  padding: 15px;
+.default-main {
+  margin: var(--ba-main-space) var(--ba-main-space) 60px var(--ba-main-space);
 }
 
 // 阿里 iconfont Symbol引用css
@@ -79,6 +78,17 @@ body {
 .slide-right-leave-to {
   opacity: 0;
   transform: translateX(20px);
+}
+
+/* 全局遮罩-s */
+.ba-layout-shade {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999990;
 }
 // slide-left
 .slide-left-enter-from {

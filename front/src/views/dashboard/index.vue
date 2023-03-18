@@ -3,7 +3,7 @@ import PaIcon from '@/components/PaIcon/index.vue'
 </script>
 
 <template>
-  <div>
+  <div class="default-main">
     <!-- # font-awesome的图标，使用 fa 作为前缀（带个空格） -->
     <PaIcon name="fa fa-pencil" color="#8595F4" size="20" />
 

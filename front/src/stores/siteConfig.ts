@@ -4,7 +4,7 @@ import { SiteConfig } from '@/stores/interface'
 export const useSiteConfig = defineStore('siteConfig', {
   state: (): SiteConfig => {
     return {
-      siteName: '',
+      siteName: 'power-admin',
       recordNumber: '',
       version: '',
       cdnUrl: '',

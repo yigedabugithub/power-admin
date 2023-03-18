@@ -18,6 +18,7 @@ import Main from '@/layout/components/main.vue'
 .layout-container {
   height: 100%;
   width: 100%;
+
 }
 .content-wrapper {
   flex-direction: column;

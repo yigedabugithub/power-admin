@@ -1,5 +1,5 @@
 <template>
-  <el-header class="layout-header">
+  <el-header v-if="!navTabs.state.tabFullScreen" class="layout-header">
     <component :is="config.layout.layoutMode + 'NavBar'"></component>
   </el-header>
 </template>
@@ -8,6 +8,8 @@ import { useConfig } from '@/stores/config'
 import DefaultNavBar from '@/layout/components/navBar/default.vue'
 import ClassicNavBar from '@/layout/components/navBar/classic.vue'
 import DoubleNavBar from '@/layout/components/navBar/double.vue'
+import { useNavTabs } from '@/stores/navTabs'
+const navTabs = useNavTabs()
 
 const config = useConfig()
 </script>
