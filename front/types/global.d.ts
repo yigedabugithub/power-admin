@@ -1,22 +1,22 @@
-// interface Window {
-//   existLoading: boolean
-//   lazy: NodeJS.Timer
-//   unique: number
-//   tokenRefreshing: boolean
-//   requests: Function[]
-//   eventSource: EventSource
-//   loadLangHandle: Record<string, any>
-// }
+interface Window {
+  existLoading: boolean
+  lazy: NodeJS.Timer
+  unique: number
+  tokenRefreshing: boolean
+  requests: Function[]
+  eventSource: EventSource
+  loadLangHandle: Record<string, any>
+}
 
 interface anyObj {
   [key: string]: any
 }
 
-// interface TableDefaultData<T = any> {
-//   list: T
-//   remark: string
-//   total: number
-// }
+interface TableDefaultData<T = any> {
+  list: T
+  remark: string
+  total: number
+}
 
 interface ApiResponse<T = any> {
   code: number

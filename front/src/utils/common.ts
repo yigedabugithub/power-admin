@@ -60,3 +60,28 @@ export const isAdminApp = (path = '') => {
   }
   return false
 }
+
+export const getArrayKey = (arr: any, pk: string, value: string): any => {
+  for (const key in arr) {
+    if (arr[key][pk] == value) {
+      return key
+    }
+  }
+  return false
+}
+
+/**
+ * 防抖
+ * @param fn 执行函数
+ * @param ms 间隔毫秒数
+ */
+export const debounce = (fn: Function, ms: number) => {
+  return (...args: any[]) => {
+    if (window.lazy) {
+      clearTimeout(window.lazy)
+    }
+    window.lazy = setTimeout(() => {
+      fn(...args)
+    }, ms)
+  }
+}

@@ -21,9 +21,6 @@ import PaIcon from '@/components/PaIcon/index.vue'
 import { showShade } from '@/utils/pageShade'
 
 const config = useConfig()
-
-console.log(config, '*-*-**-*777-*-*--')
-
 const onMenuCollapse = () => {
   showShade('ba-aside-menu-shade', () => {
     config.setLayout('menuCollapse', true)
