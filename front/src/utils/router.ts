@@ -23,13 +23,13 @@ export const routePush = async (to: RouteLocationRaw) => {
       })
     } else if (isNavigationFailure(failure, NavigationFailureType.duplicated)) {
       ElNotification({
-        message: 'it is at the navigation target position!',
+        message: '已在当前导航!',
         type: 'warning'
       })
     }
   } catch (error) {
     ElNotification({
-      message: 'invalid route!',
+      message: '无效路由!',
       type: 'error'
     })
     console.error(error)

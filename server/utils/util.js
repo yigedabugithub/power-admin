@@ -70,4 +70,32 @@ module.exports = {
     }
     return fmt;
   },
+
+  // 递归拼接树形列表
+  getTreeMenu(rootList, id, list) {
+    rootList.forEach(item => {
+      if (String(item.parentId) === String(id)) {
+        list.push(item._doc)
+      }
+    })
+    list.map(item => {
+      item.children = []
+      item.meta = {
+        title: item.menuName,
+        icon: item.icon,
+        hidden: item.hidden,
+        keepAlive: item.keepAlive,
+        roles: item.roles
+      }
+      this.getTreeMenu(rootList, item._id, item.children)
+      if (item.children.length == 0) {
+        delete item.children;
+      }
+      // else if (item.children.length > 0 && item.children[0].menuType == 2) {
+      // 快速区分按钮和菜单，用于后期做菜单按钮权限控制
+      // item.action = item.children;
+      // }
+    })
+    return list;
+  },
 }

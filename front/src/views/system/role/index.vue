@@ -14,12 +14,12 @@ import PopupForm from './popupForm.vue'
 import TableHeader from '@/components/PaTable/header/index.vue'
 import baTableClass from '@/utils/paTable'
 import TableTT from '@/components/PaTable/index.vue'
-import { rolesList } from '@/api/controllerUrls'
+import { roles } from '@/api/controllerUrls'
 import { baTableApi } from '@/api/common'
 import { tableRoleColumn } from './config'
 
 const tableRef = ref()
-const paTable = new baTableClass(new baTableApi(rolesList), {
+const paTable = new baTableClass(new baTableApi(roles), {
   column: tableRoleColumn
 })
 paTable.mount()

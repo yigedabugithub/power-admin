@@ -6,6 +6,46 @@ const jwt = require('jsonwebtoken')
 
 router.prefix('/users')
 
+const userInfoJwt = (parts) => {
+  let token = '';
+  let ndata = '';
+
+  if (parts.length == 2) {
+    let scheme = parts[0];
+    let credentials = parts[1];
+    if (/^Bearer$/i.test(scheme)) {
+      token = credentials; //最终获取到token          
+    }
+  }
+
+  jwt.verify(token, 'power-admin', function (error, { data }) {
+    if (error) {
+      ctx.body = util.fail({}, 'token无效')
+      next()
+    }
+    if (data) { ndata = data }
+  })
+  return ndata
+}
+
+// 用户列表
+router.get('/index', async (ctx) => {
+  const { userId, userName, state } = ctx.request.query
+  const { page, skipIndex } = util.pager(ctx.request.query)
+  let params = {}
+  if (userId) params.userId = userId
+  if (userName) params.userName = userName
+  if (state && state != '0') params.state = state
+  try {
+    const query = User.find(params, { passWord: 0 })
+    const list = await query.skip(skipIndex).limit(page.pageSize)
+    const total = await User.countDocuments(params)
+    ctx.body = util.success({ list, total })
+  } catch (error) {
+    ctx.body = util.fail(`查询异常：${error.stack}`)
+  }
+})
+
 // 用户登录
 router.post('/login', async (ctx) => {
   try {
@@ -33,25 +73,31 @@ router.post('/login', async (ctx) => {
 
 // 用户信息(info,menu)
 router.get('/userInfo', async (ctx) => {
-  let parts = ctx.request.header.authorization.split(' ');
-  let token = '';
-  let ndata = '';
-  try {
-    if (parts.length == 2) {
-      let scheme = parts[0];
-      let credentials = parts[1];
-      if (/^Bearer$/i.test(scheme)) {
-        token = credentials; //最终获取到token          
-      }
-    }
 
-    jwt.verify(token, 'power-admin', function (error, { data }) {
-      if (error) {
-        ctx.body = util.fail({}, 'token无效')
-        next()
-      }
-      if (data) { ndata = data }
-    })
+  // // id查询用户拥有的角色
+  // const roleObj = await User.findOne({ userId }, 'roleList')
+  // // 根据已有角色合并权限点
+  // const roleList = await Role.find({ _id: { $in: roleObj.roleList } })
+  // let checkedKeys = []
+  // roleList.map(item => {
+  //   checkedKeys.push(...item.checkedKeys)
+  //   checkedKeys.push(...item.halfCheckedKeys)
+  // })
+  // checkedKeys = [...new Set(checkedKeys)]
+  // let rootList = await Menu.find({ _id: { $in: checkedKeys } })
+  // const list = util.getTreeMenu(rootList, '111111111111111111111111', [])
+  // ctx.body = util.success(list, 'success');
+
+
+  let parts = ctx.request.header.authorization.split(' ');
+  try {
+    const ndata = userInfoJwt(parts)
+    // id查询用户拥有的角色
+    // const roleObj = await User.findOne({ _id: ndata._id }, 'roleList')
+    // 根据已有角色合并权限点
+    // const roleList = await Role.find({ _id: { $in: roleObj.roleList } })
+
+
     const res = await User.findOne({ _id: ndata._id }, { passWord: 0 })
     if (res) {
       const userInfo = {
@@ -75,7 +121,7 @@ router.get('/userInfo', async (ctx) => {
             "id": 2,
             "pid": 0,
             "type": "menu_dir",
-            "title": "权限管理",
+            "title": "系统管理",
             "name": "system",
             "path": "system",
             "icon": "fa fa-group",
@@ -89,7 +135,21 @@ router.get('/userInfo', async (ctx) => {
                 "id": 3,
                 "pid": 2,
                 "type": "menu",
-                "title": "角色组管理",
+                "title": "人员管理",
+                "name": "system/user",
+                "path": "system/user",
+                "icon": "fa fa-group",
+                "menu_type": "tab",
+                "url": "",
+                "component": "/src/views/system/user/index.vue",
+                "keepalive": "system/user",
+                "extend": "none",
+              },
+              {
+                "id": 3,
+                "pid": 2,
+                "type": "menu",
+                "title": "角色管理",
                 "name": "system/role",
                 "path": "system/role",
                 "icon": "fa fa-group",
@@ -98,9 +158,7 @@ router.get('/userInfo', async (ctx) => {
                 "component": "/src/views/system/role/index.vue",
                 "keepalive": "system/role",
                 "extend": "none",
-
               },
-
               {
                 "id": 13,
                 "pid": 2,

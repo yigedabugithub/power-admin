@@ -8,7 +8,11 @@ const logger = require('koa-logger')
 const koajwt = require('koa-jwt')
 const log4js = require('./utils/log4js')
 const router = require('koa-router')()
+
 const users = require('./routes/users')
+const menus = require('./routes/menus')
+const roles = require('./routes/roles')
+
 require('./config/db')
 
 // error handler
@@ -36,9 +40,16 @@ app.use(async (ctx, next) => {
   })
 })
 
+// // routes
+// router.prefix("/api")
+// router.use(users.routes(), users.allowedMethods())
+// app.use(router.routes(), router.allowedMethods())
+
 // routes
 router.prefix("/api")
 router.use(users.routes(), users.allowedMethods())
+router.use(menus.routes(), menus.allowedMethods())
+router.use(roles.routes(), roles.allowedMethods())
 app.use(router.routes(), router.allowedMethods())
 
 // error-handling
