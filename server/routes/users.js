@@ -3,6 +3,8 @@ const router = require('koa-router')()
 const User = require('./../models/userSchema')
 const util = require('./../utils/util')
 const jwt = require('jsonwebtoken')
+const Menu = require('../models/menuSchema')
+const Role = require('../models/roleSchema')
 
 router.prefix('/users')
 
@@ -30,10 +32,10 @@ const userInfoJwt = (parts) => {
 
 // 用户列表
 router.get('/index', async (ctx) => {
-  const { userId, userName, state } = ctx.request.query
+  const { _id, userName, state } = ctx.request.query
   const { page, skipIndex } = util.pager(ctx.request.query)
   let params = {}
-  if (userId) params.userId = userId
+  if (_id) params._id = _id
   if (userName) params.userName = userName
   if (state && state != '0') params.state = state
   try {
@@ -52,9 +54,9 @@ router.post('/login', async (ctx) => {
     const { userName, passWord } = ctx.request.body;
     /**
      * 返回数据库指定字段，有三种方式
-     * 1. 'userId userName userEmail state role deptId roleList'
-     * 2. {userId:1,_id:0}
-     * 3. select('userId')
+     * 1. '_id userName userEmail state role deptId roleList'
+     * 2. {_id:1,_id:0}
+     * 3. select('_id')
      */
     const res = await User.findOne({ userName, passWord }, '_id token')
 
@@ -73,110 +75,29 @@ router.post('/login', async (ctx) => {
 
 // 用户信息(info,menu)
 router.get('/userInfo', async (ctx) => {
-
-  // // id查询用户拥有的角色
-  // const roleObj = await User.findOne({ userId }, 'roleList')
-  // // 根据已有角色合并权限点
-  // const roleList = await Role.find({ _id: { $in: roleObj.roleList } })
-  // let checkedKeys = []
-  // roleList.map(item => {
-  //   checkedKeys.push(...item.checkedKeys)
-  //   checkedKeys.push(...item.halfCheckedKeys)
-  // })
-  // checkedKeys = [...new Set(checkedKeys)]
-  // let rootList = await Menu.find({ _id: { $in: checkedKeys } })
-  // const list = util.getTreeMenu(rootList, '111111111111111111111111', [])
-  // ctx.body = util.success(list, 'success');
-
-
   let parts = ctx.request.header.authorization.split(' ');
   try {
     const ndata = userInfoJwt(parts)
+
     // id查询用户拥有的角色
-    // const roleObj = await User.findOne({ _id: ndata._id }, 'roleList')
+    const roleObj = await User.findOne({ _id_id: ndata._id_id }, 'roleList')
     // 根据已有角色合并权限点
-    // const roleList = await Role.find({ _id: { $in: roleObj.roleList } })
+    const roleList = await Role.find({ _id: { $in: roleObj.roleList } })
 
-
+    let checkedKeys = []
+    roleList.map(item => {
+      checkedKeys.push(...item.checkedKeys)
+      checkedKeys.push(...item.halfCheckedKeys)
+    })
+    checkedKeys = [...new Set(checkedKeys)]
+    let rootList = await Menu.find({ _id: { $in: checkedKeys } })
+    console.log(rootList, '*************rootList');
+    const list = util.getTreeMenu(rootList, '012345678910111213141516', [])
     const res = await User.findOne({ _id: ndata._id }, { passWord: 0 })
     if (res) {
       const userInfo = {
         info: res._doc,
-        menus: [
-          {
-            "id": 1,
-            "pid": 0,
-            "type": "menu",
-            "title": "控制台",
-            "name": "dashboard/dashboard",
-            "path": "dashboard",
-            "icon": "fa fa-dashboard",
-            "menu_type": "tab",
-            "url": "",
-            "component": "/src/views/dashboard/index.vue",
-            "keepalive": "admin/dashboard",
-            "extend": "none"
-          },
-          {
-            "id": 2,
-            "pid": 0,
-            "type": "menu_dir",
-            "title": "系统管理",
-            "name": "system",
-            "path": "system",
-            "icon": "fa fa-group",
-            "menu_type": null,
-            "url": "",
-            "component": "",
-            "keepalive": 0,
-            "extend": "none",
-            "children": [
-              {
-                "id": 3,
-                "pid": 2,
-                "type": "menu",
-                "title": "人员管理",
-                "name": "system/user",
-                "path": "system/user",
-                "icon": "fa fa-group",
-                "menu_type": "tab",
-                "url": "",
-                "component": "/src/views/system/user/index.vue",
-                "keepalive": "system/user",
-                "extend": "none",
-              },
-              {
-                "id": 3,
-                "pid": 2,
-                "type": "menu",
-                "title": "角色管理",
-                "name": "system/role",
-                "path": "system/role",
-                "icon": "fa fa-group",
-                "menu_type": "tab",
-                "url": "",
-                "component": "/src/views/system/role/index.vue",
-                "keepalive": "system/role",
-                "extend": "none",
-              },
-              {
-                "id": 13,
-                "pid": 2,
-                "type": "menu",
-                "title": "菜单规则管理",
-                "name": "system/menu",
-                "path": "system/menu",
-                "icon": "el-icon-Grid",
-                "menu_type": "tab",
-                "url": "",
-                "component": "/src/views/system/menu/index.vue",
-                "keepalive": "system/menu",
-                "extend": "none",
-              },
-
-            ]
-          },
-        ],
+        menus: list,
         siteConfig: {}
       }
       ctx.body = util.success(userInfo, 'success')
@@ -199,7 +120,7 @@ router.post('/add', async (ctx) => {
     ctx.body = util.fail(`系统监测到有重复的用户，信息如下：${res.userName} - ${res.userEmail}`)
   } else {
     try {
-      const res = await create(enterData)
+      const res = await User.create(enterData)
       if (res) ctx.body = util.success('', '用户创建成功');
     } catch (error) {
       ctx.body = util.fail(error.stack, '用户创建失败');
@@ -242,7 +163,7 @@ router.post('/edit', async (ctx) => {
 router.delete('/del', async (ctx) => {
   // 待删除的用户Id数组
   const delList = ctx.request.body
-  // User.updateMany({ $or: [{ userId: 10001 }, { userId: 10002 }] })
+  // User.updateMany({ $or: [{ _id: 10001 }, { _id: 10002 }] })
   // delList.forEach(item => item._id = item);
   const res = await User.updateMany({ _id: { $in: delList } }, { state: 2 })
   if (res.modifiedCount) { //原来nModified-//-modifiedCount

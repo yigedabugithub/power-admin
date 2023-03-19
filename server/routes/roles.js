@@ -76,6 +76,7 @@ router.delete('/del', async (ctx) => {
   const idList = ctx.request.body;
   try {
     idList.forEach(item => item._id = item);
+    console.log(Role.remove,'----------------Role');
     const res = await Role.remove({ _id: { $in: idList } });
     if (res) ctx.body = util.success({}, '删除成功')
 

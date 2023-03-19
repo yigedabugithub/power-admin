@@ -93,7 +93,7 @@ const rules: Partial<Record<string, FormItemRule[]>> = reactive({
 })
 
 const parentMenu = ref([])
-const defprops = { label: 'menuName', value: '_id' }
+const defprops = { label: 'title', value: '_id' }
 const handleCheckChange = (val: any, num: any) => {
   console.log(val, num, '*-*-*-*-*-')
   paTable.form.items!.checkedKeys = num.checkedKeys

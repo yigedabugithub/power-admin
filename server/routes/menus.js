@@ -8,9 +8,9 @@ router.prefix('/menus')
 
 // 菜单列表查询
 router.get('/routes', async (ctx) => {
-  const { userId } = ctx.request.query;
+  const { _id } = ctx.request.query;
   // id查询用户拥有的角色
-  const roleObj = await User.findOne({ userId }, 'roleList')
+  const roleObj = await User.findOne({ _id }, 'roleList')
   // 根据已有角色合并权限点
   const roleList = await Role.find({ _id: { $in: roleObj.roleList } })
   let checkedKeys = []
@@ -20,7 +20,7 @@ router.get('/routes', async (ctx) => {
   })
   checkedKeys = [...new Set(checkedKeys)]
   let rootList = await Menu.find({ _id: { $in: checkedKeys } })
-  const list = util.getTreeMenu(rootList, '111111111111111111111111', [])
+  const list = util.getTreeMenu(rootList, '012345678910111213141516', [])
   ctx.body = util.success(list, 'success');
 
 })
@@ -29,7 +29,7 @@ router.get('/routes', async (ctx) => {
 // 菜单列表查询
 router.get('/index', async (ctx) => {
   let rootList = await Menu.find() || []
-  const list = util.getTreeMenu(rootList, '111111111111111111111111', [])
+  const list = util.getTreeMenu(rootList, '012345678910111213141516', [])
   ctx.body = util.success({ list }, 'success');
 })
 

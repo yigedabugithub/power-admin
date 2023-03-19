@@ -29,27 +29,27 @@
               v-model="paTable.form.items!.parentId"
               :data="parentMenu"
               check-strictly
-              :props="{ label: 'menuName', value: '_id' }"
+              :props="{ label: 'title', value: '_id' }"
               placeholder="请选择"
             />
           </el-form-item>
-          <el-form-item prop="menuType" label="菜单类型">
-            <el-radio-group v-model="paTable.form.items!.menuType">
+          <el-form-item prop="menu_type" label="菜单类型">
+            <el-radio-group v-model="paTable.form.items!.menu_type">
               <el-radio :label="0" border>目录</el-radio>
               <el-radio :label="1" border>菜单项</el-radio>
               <el-radio :label="2" border>按钮</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item prop="menuName" label="菜单名称">
-            <el-input v-model="paTable.form.items!.menuName" placeholder="请输入"></el-input>
+          <el-form-item prop="title" label="菜单名称">
+            <el-input v-model="paTable.form.items!.title" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item prop="path" label="路由地址">
             <el-input v-model="paTable.form.items!.path" placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item prop="menuType" v-if="paTable.form.items!.menuType !== 2" label="组件路径">
+          <el-form-item prop="menu_type" v-if="paTable.form.items!.menu_type !== 2" label="组件路径">
             <el-input v-model="paTable.form.items!.component" placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item prop="menuType" v-if="paTable.form.items!.menuType !== 0" label="权限标识">
+          <el-form-item prop="menu_type" v-if="paTable.form.items!.menu_type !== 0" label="权限标识">
             <el-input v-model="paTable.form.items!.menuCode" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item prop="keepAlive" label="缓存状态">
