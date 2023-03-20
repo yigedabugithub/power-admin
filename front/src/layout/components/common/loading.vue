@@ -24,7 +24,7 @@ const navTabs = useNavTabs()
 const route = useRoute()
 const router = useRouter()
 const { query } = route
-const pathh = JSON.parse(route.params.to).path
+const pathh = JSON.parse(route.params.to as string).path
 
 const state = reactive({
   maximumWait: 1000 * 6,
@@ -33,7 +33,6 @@ const state = reactive({
 
 if (isAdminApp() && navTabs.state.tabsViewRoutes) {
   setTimeout(() => {
-    console.log(pathh, '***route.fullPath')
     router.replace({ path: pathh, query })
   }, 100)
 }

@@ -36,7 +36,8 @@ import PaIcon from '@/components/PaIcon/index.vue'
 // 不能使用导出的 interface vue的issue已存在，尚未解决
 interface Props {
   width?: number
-  items: ContextMenuItem[]
+  items: any[]
+  // items: ContextMenuItem[]
 }
 
 const props = withDefaults(defineProps<Props>(), {

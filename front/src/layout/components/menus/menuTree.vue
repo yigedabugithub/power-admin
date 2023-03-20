@@ -25,14 +25,14 @@
 </template>
 <script setup lang="ts">
 import { useConfig } from '@/stores/config'
-import { RouteRecordRaw } from 'vue-router'
+// import { RouteRecordRaw } from 'vue-router'
 import { onClickMenu } from '@/utils/router'
 import PaIcon from '@/components/PaIcon/index.vue'
 
 const config = useConfig()
 
 interface Props {
-  menus: RouteRecordRaw[]
+  menus: any[]
 }
 const props = withDefaults(defineProps<Props>(), {
   menus: () => []
