@@ -11,7 +11,6 @@ router.prefix('/users')
 const userInfoJwt = (parts) => {
   let token = '';
   let ndata = '';
-
   if (parts.length == 2) {
     let scheme = parts[0];
     let credentials = parts[1];
@@ -37,7 +36,7 @@ router.get('/index', async (ctx) => {
   let params = {}
   if (_id) params._id = _id
   if (userName) params.userName = userName
-  if (state && state != '0') params.state = state
+  if (state && state != '2') params.state = state
   try {
     const query = User.find(params, { passWord: 0 })
     const list = await query.skip(skipIndex).limit(page.pageSize)
@@ -91,7 +90,6 @@ router.get('/userInfo', async (ctx) => {
     })
     checkedKeys = [...new Set(checkedKeys)]
     let rootList = await Menu.find({ _id: { $in: checkedKeys } })
-    console.log(rootList, '*************rootList');
     const list = util.getTreeMenu(rootList, '012345678910111213141516', [])
     const res = await User.findOne({ _id: ndata._id }, { passWord: 0 })
     if (res) {
