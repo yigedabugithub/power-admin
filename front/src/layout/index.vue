@@ -81,8 +81,8 @@ export default {
 }
 </script>
 <template>
-  <!-- <component :is="config.layout.layoutMode"></component> -->
-  <Default></Default>
+  <component :is="config.layout.layoutMode"></component>
+  <!-- <Default></Default> -->
 </template>
 
 <style lang="scss" scoped></style>

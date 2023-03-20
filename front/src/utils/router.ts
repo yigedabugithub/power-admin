@@ -90,7 +90,6 @@ export const handleAdminRoute = (routes: any) => {
   addRouteAll(viewsComponent, routes, 'admin')
   const menuRule = handleMenuRule(routes, '/admin/', '/admin/')
 
-  console.log(menuRule, 'menuRule*******************')
   // const menuAdminBaseRoute = '/' + (adminBaseRoute.name as string) + '/'
   // const menuRule = handleMenuRule(routes, menuAdminBaseRoute, menuAdminBaseRoute)
 

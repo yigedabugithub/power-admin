@@ -15,7 +15,7 @@
 <script setup lang="ts">
 import { onUnmounted, reactive } from 'vue'
 import { useNavTabs } from '@/stores/navTabs'
-import { isAdminApp } from '@/utils/common'
+// import { isAdminApp } from '@/utils/common'
 import { useRoute, useRouter } from 'vue-router'
 
 let timer: NodeJS.Timer
@@ -31,11 +31,9 @@ const state = reactive({
   showReload: false
 })
 
-if (isAdminApp() && navTabs.state.tabsViewRoutes) {
-  setTimeout(() => {
-    router.replace({ path: pathh, query })
-  }, 100)
-}
+watchEffect(() => {
+  navTabs.state.tabsViewRoutes && router.replace({ path: pathh, query })
+})
 
 timer = setTimeout(() => {
   state.showReload = true

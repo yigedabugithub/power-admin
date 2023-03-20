@@ -8,6 +8,7 @@ import '@/styles/index.scss'
 import pinia from '@/stores/index'
 import mitt from 'mitt'
 import locale from 'element-plus/lib/locale/lang/zh-cn' //中文
+import { directives } from '@/utils/directives'
 
 async function start() {
   const app = createApp(App)
@@ -15,7 +16,7 @@ async function start() {
   app.use(router)
   app.use(ElementPlus, { locale })
   // 全局注册
-  // directives(app) // 指令
+  directives(app) // 指令
   registerIcons(app) // icons
   app.mount('#app')
   app.config.globalProperties.eventBus = mitt()

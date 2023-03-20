@@ -18,8 +18,6 @@ import Logo from '@/layout/components/logo.vue'
 import { useNavTabs } from '@/stores/navTabs'
 const navTabs = useNavTabs()
 
-console.log(navTabs.state, '9******************')
-
 const config = useConfig()
 const menuWidth = computed(() => config.menuWidth())
 </script>
