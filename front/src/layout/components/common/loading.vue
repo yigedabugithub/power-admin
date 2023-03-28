@@ -32,7 +32,11 @@ const state = reactive({
 })
 
 watchEffect(() => {
-  navTabs.state.tabsViewRoutes && router.replace({ path: pathh, query })
+  if (navTabs.state.tabsViewRoutes) {
+    router.replace({ path: pathh, query })
+    // const aa = router.replace({ path: pathh, query })
+    // console.log(aa, '****************************11')
+  }
 })
 
 timer = setTimeout(() => {

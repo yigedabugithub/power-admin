@@ -14,6 +14,10 @@ const users = require('./routes/users')
 const menus = require('./routes/menus')
 const roles = require('./routes/roles')
 
+// 
+const lifeUsers = require('./routes/lifeBlogRoutes/lifeUsers')
+
+
 require('./config/db')
 
 // error handler
@@ -40,7 +44,8 @@ app.use(bodyparser({ enableTypes: ['json', 'form', 'text'] }))
 app.use(json())
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
-app.use(koajwt({ secret: 'power-admin' }).unless({ path: [/^\/api\/users\/login/] }))
+app.use(koajwt({ secret: 'power-admin' }).unless({ path: [/login$/] }))
+// app.use(koajwt({ secret: 'power-admin' }).unless({ path: [/^\/api\/users\/login/] }))
 app.use(views(__dirname + '/views', { extension: 'pug' }))
 
 // logger
@@ -57,16 +62,15 @@ app.use(async (ctx, next) => {
   })
 })
 
-// // routes
-// router.prefix("/api")
-// router.use(users.routes(), users.allowedMethods())
-// app.use(router.routes(), router.allowedMethods())
-
 // routes
 router.prefix("/api")
 router.use(users.routes(), users.allowedMethods())
 router.use(menus.routes(), menus.allowedMethods())
 router.use(roles.routes(), roles.allowedMethods())
+
+// 
+router.use(lifeUsers.routes(), lifeUsers.allowedMethods())
+
 app.use(router.routes(), router.allowedMethods())
 
 // error-handling
