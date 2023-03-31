@@ -24,4 +24,18 @@ router.post('/login', async (ctx) => {
   }
 })
 
+// lifer信息
+router.get('/userInfo', async (ctx) => {
+  let parts = ctx.request.header.authorization.split(' ');
+  try {
+    const ndata = util.userInfoJwt(parts)
+    const res = await lifeUser.findOne({ _id: ndata._id }, { passWord: 0 })
+    if (res) {
+      ctx.body = util.success(res._doc, 'success')
+    }
+  } catch (e) {
+    console.log(e)
+  }
+})
+
 module.exports = router

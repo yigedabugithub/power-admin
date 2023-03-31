@@ -91,4 +91,25 @@ module.exports = {
     })
     return list;
   },
+
+  userInfoJwt(parts) {
+    let token = '';
+    let ndata = '';
+    if (parts.length == 2) {
+      let scheme = parts[0];
+      let credentials = parts[1];
+      if (/^Bearer$/i.test(scheme)) {
+        token = credentials; //最终获取到token          
+      }
+    }
+
+    jwt.verify(token, 'power-admin', function (error, { data }) {
+      if (error) {
+        ctx.body = util.fail({}, 'token无效')
+        next()
+      }
+      if (data) { ndata = data }
+    })
+    return ndata
+  }
 }

@@ -12,10 +12,12 @@ import PaIcon from '@/components/PaIcon/index.vue'
 
     <!-- # 本地`/web/src/assets/icons`文件夹内的SVG图标，使用 local 作为前缀，文件名作为后缀 # -->
     <!-- 文件自动加载，新增请重新编译 -->
-    <PaIcon name="local-dark" color="#8595F4" size="20" />
+    <PaIcon name="local-dark" class="aa" color="#8595F4" size="20" />
     <!-- # 阿里iconfont的图标，使用 iconfont 作为前缀（带个空格） -->
     <PaIcon name="iconfont icon-xiazai" color="#8595F4" size="20" />
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+</style>

@@ -16,6 +16,7 @@ const roles = require('./routes/roles')
 
 // 
 const lifeUsers = require('./routes/lifeBlogRoutes/lifeUsers')
+const lifeLogs = require('./routes/lifeBlogRoutes/lifeLogs')
 
 
 require('./config/db')
@@ -70,6 +71,7 @@ router.use(roles.routes(), roles.allowedMethods())
 
 // 
 router.use(lifeUsers.routes(), lifeUsers.allowedMethods())
+router.use(lifeLogs.routes(), lifeLogs.allowedMethods())
 
 app.use(router.routes(), router.allowedMethods())
 
