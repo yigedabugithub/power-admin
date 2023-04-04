@@ -28,11 +28,12 @@ onerror(app)
 app.use(
   cors({
     origin: function (ctx) { //设置允许来自指定域名请求
-      // if (ctx.url === '/test') {
-      //   return '*'; // 允许来自所有域名请求
-      // }
-      return '*'; //只允许http://localhost:8080这个域名的请求
-      // return 'http://123.249.122.1:3000'; //只允许http://localhost:8080这个域名的请求
+      const whiteList = ['http://power-admin.tech', 'http://123.56.216.221:1080',]; //可跨域白名单
+      let url = ctx.header.referer.slice(0, ctx.header.referer.length - 1);
+      if (whiteList.includes(url)) {
+        return url //注意，这里域名末尾不能带/，否则不成功，所以在之前我把/通过substr干掉了
+      }
+      return 'http://localhost:3000' //默认允许本地请求3000端口可跨域
     },
     maxAge: 5, //指定本次预检请求的有效期，单位为秒。
     credentials: true, //是否允许发送Cookie

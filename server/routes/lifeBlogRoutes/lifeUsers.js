@@ -24,7 +24,7 @@ router.post('/login', async (ctx) => {
   }
 })
 
-// lifer信息
+// lifer信息查询
 router.get('/userInfo', async (ctx) => {
   let parts = ctx.request.header.authorization.split(' ');
   try {
@@ -36,6 +36,18 @@ router.get('/userInfo', async (ctx) => {
   } catch (e) {
     console.log(e)
   }
+})
+
+// lifer信息编辑保存
+router.post('/edit', async (ctx) => {
+  const { _id, ...dataPost } = ctx.request.body;
+  try {
+    const res = await lifeUser.findOneAndUpdate({ _id }, dataPost)
+    if (res) ctx.body = util.success({}, '更新成功')
+  } catch (error) {
+    ctx.body = util.fail(error.stack, '更新失败')
+  }
+
 })
 
 module.exports = router

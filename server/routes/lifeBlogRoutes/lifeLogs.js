@@ -11,7 +11,7 @@ router.get('/logs', async (ctx) => {
 
   try {
     const ndata = util.userInfoJwt(parts)
-    const res = await lifeLog.find({ userId: ndata._id }, { _id: 0 }).skip(skipIndex).limit(page.pageSize)
+    const res = await lifeLog.find({ userId: ndata._id }).skip(skipIndex).limit(page.pageSize)
     const total = await lifeLog.countDocuments({ userId: ndata._id })
     ctx.body = util.success({ list: res, total })
 
@@ -31,6 +31,47 @@ router.post('/creatLog', async (ctx) => {
   }
 })
 
+// 博客删除
+router.delete('/del', async (ctx) => {
+  // 待删除的用户Id数组
+  const { _id } = ctx.request.body
+  const res = await lifeLog.deleteOne({ _id })
+  console.log(res, '************');
+  if (res.deletedCount >= 1) {
+    ctx.body = util.success(res, '删除成功')
+    return;
+  }
+  ctx.body = util.fail('删除失败');
+})
 
+// 博客编辑回显
+router.get('/edit', async (ctx) => {
+  const { _id } = ctx.request.query;
+  if (!_id) {
+    ctx.body = util.fail('_id不能为空', util.CODE.PARAM_ERROR)
+    return;
+  }
+  try {
+    const res = await lifeLog.findOne({ _id })
+    if (res) {
+      const data = res._doc;
+      ctx.body = util.success(data)
+    }
+  } catch (error) {
+    ctx.body = util.fail(`查询异常：${error.stack}`)
+  }
+
+})
+// 用户编辑保存
+router.post('/edit', async (ctx) => {
+  const { _id, ...dataPost } = ctx.request.body;
+  try {
+    const res = await lifeLog.findOneAndUpdate({ _id }, dataPost)
+    if (res) ctx.body = util.success({}, '更新成功')
+  } catch (error) {
+    ctx.body = util.fail(error.stack, '更新失败')
+  }
+
+})
 
 module.exports = router
