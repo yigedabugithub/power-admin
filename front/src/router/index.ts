@@ -1,4 +1,7 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+// import { useUserInfo } from '@/stores/userInfo'
+// import store from '@/stores/index'
+// const userInfo = useUserInfo(store)
 
 const Layout = () => import('@/layout/index.vue')
 
@@ -7,7 +10,7 @@ export const constantRoutes: Array<RouteRecordRaw> = [
   {
     // 首页
     path: '/',
-    name: '/',
+    redirect: '/admin',
     component: () => import('@/views/frontend/index.vue'),
     meta: {
       title: 'home'
@@ -27,7 +30,7 @@ export const constantRoutes: Array<RouteRecordRaw> = [
     path: '/admin',
     name: 'admin',
     component: Layout,
-    redirect: '/admin/loading',
+    redirect: '/admin/dashboard',
     meta: { title: 'dashboard' },
     children: [
       {
@@ -83,8 +86,15 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  // console.log(to, from, 'to, from')
+  // console.log(userInfo,'99999');
 
+  // if (!userInfo.token) {
+  //   // next({ path: '/login' })
+  //   next()
+
+  // } else {
+  //   next()
+  // }
   next()
 })
 // 路由加载后

@@ -13,6 +13,7 @@ import { ElLoading, LoadingOptions, ElNotification } from 'element-plus'
 import { useUserInfo } from '@/stores/userInfo'
 import { Local } from '@/utils/storage'
 import { USER_INFO } from '@/stores/constant/cacheKey'
+import router from '@/router/index'
 
 const userInfo = useUserInfo()
 
@@ -199,16 +200,15 @@ function createAxios(
 
       // 自动携带token,无token退出
       if (userInfo?.token) {
-        config.headers['Authorization'] = `${Local.get(USER_INFO).token}`
+        config.headers['Authorization'] = userInfo?.token
+        // config.headers['Authorization'] = `${Local.get(USER_INFO).token}`
+      } else if (!userInfo?.token && router.currentRoute.value.name !== 'login') {
+        userInfo.logout()
+        ElNotification({
+          type: 'error',
+          message: 'token无效，请重新登录'
+        })
       }
-
-      // if (!userInfo?.token && route.path !== 'login') {
-      //   userInfo.logout()
-      //   ElNotification({
-      //     type: 'error',
-      //     message: 'token无效，请重新登录'
-      //   })
-      // }
 
       return config
     },
