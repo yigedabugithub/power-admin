@@ -14,13 +14,17 @@ import router from '@/router'
 import { useEventListener } from '@vueuse/core'
 import { Session } from '@/utils/storage'
 import { BEFORE_RESIZE_LAYOUT } from '@/stores/constant/cacheKey'
+import { useNavTabs } from '@/stores/navTabs'
 
+const navTabs = useNavTabs()
 const route = useRoute()
 const userInfo = useUserInfo()
 const siteConfig = useSiteConfig()
 const config = useConfig()
 
 onMounted(() => {
+  if (!userInfo.token) return router.push({ name: 'login' })
+
   init()
 
   onSetNavTabsMinWidth()
@@ -58,7 +62,22 @@ const init = () => {
   userInfoApi().then((res) => {
     siteConfig.dataFill(res.data.siteConfig)
     userInfo.dataFill(res.data.info)
-    if (res.data.menus) handleAdminRoute(res.data.menus)
+    if (res.data.menus) {
+      handleAdminRoute(res.data.menus)
+      // 预跳转到上次路径
+      if (route.params.to) {
+        const lastRoute = JSON.parse(route.params.to as string)
+        if (lastRoute.path != '/admin') {
+          let query = !isEmpty(lastRoute.query) ? lastRoute.query : {}
+          routePush({ path: lastRoute.path, query: query })
+          return
+        }
+      }
+
+      // 跳转到第一个菜单
+      let firstRoute = getFirstRoute(navTabs.state.tabsViewRoutes)
+      if (firstRoute) routePush(firstRoute.path)
+    }
   })
 }
 

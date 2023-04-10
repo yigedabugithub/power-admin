@@ -110,13 +110,13 @@ export const useNavTabs = defineStore(
  * 对iframe的url进行编码
  */
 function encodeRoutesURI(data: RouteRecordRaw[]) {
-  data.forEach((item) => {
-    // if (item.meta?.type == 'iframe') {
-    //   item.path = '/admin/iframe/' + encodeURIComponent(item.path)
-    // }
-    // if (item.children && item.children.length) {
-    //   item.children = encodeRoutesURI(item.children)
-    // }
-  })
+  // data.forEach((item) => {
+  // if (item.meta?.type == 'iframe') {
+  //   item.path = '/admin/iframe/' + encodeURIComponent(item.path)
+  // }
+  // if (item.children && item.children.length) {
+  //   item.children = encodeRoutesURI(item.children)
+  // }
+  // })
   return data
 }

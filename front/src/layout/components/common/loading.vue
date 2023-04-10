@@ -17,6 +17,7 @@ import { onUnmounted, reactive } from 'vue'
 import { useNavTabs } from '@/stores/navTabs'
 // import { isAdminApp } from '@/utils/common'
 import { useRoute, useRouter } from 'vue-router'
+import { getFirstRoute, routePush } from '@/utils/router'
 
 let timer: NodeJS.Timer
 
@@ -30,14 +31,22 @@ const state = reactive({
   maximumWait: 1000 * 6,
   showReload: false
 })
+// console.log(navTabs.state.tabsViewRoutes, 'dddddddddddd111dddddddddddddd')
 
-watchEffect(() => {
-  if (navTabs.state.tabsViewRoutes) {
-    router.replace({ path: pathh, query })
-    // const aa = router.replace({ path: pathh, query })
-    // console.log(aa, '****************************11')
-  }
-})
+if (navTabs.state.tabsViewRoutes) {
+  console.log(navTabs.state.tabsViewRoutes, 'dddddddddddd22dddddddddddddd')
+
+  let firstRoute = getFirstRoute(navTabs.state.tabsViewRoutes)
+
+  if (firstRoute) routePush(firstRoute.path)
+}
+// watchEffect(() => {
+//   if (navTabs.state.tabsViewRoutes) {
+//     router.replace({ path: pathh, query })
+//     // const aa = router.replace({ path: pathh, query })
+//     // console.log(aa, '****************************11')
+//   }
+// })
 
 timer = setTimeout(() => {
   state.showReload = true

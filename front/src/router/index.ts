@@ -13,6 +13,16 @@ export const constantRoutes: Array<RouteRecordRaw> = [
       title: 'home'
     }
   },
+  // 登录
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/login/index.vue'),
+    meta: {
+      title: 'login'
+    }
+  },
+  // 基础父路由
   {
     path: '/admin',
     name: 'admin',
@@ -30,8 +40,8 @@ export const constantRoutes: Array<RouteRecordRaw> = [
       }
     ]
   },
+  // 后台找不到页面了-可能是路由未加载上
   {
-    // 后台找不到页面了-可能是路由未加载上
     path: '/admin:path(.*)*',
     redirect: (to) => {
       return {
@@ -46,10 +56,6 @@ export const constantRoutes: Array<RouteRecordRaw> = [
     }
   },
 
-  {
-    path: '/login',
-    component: () => import('@/views/login/index.vue')
-  },
   {
     path: '/:path(.*)*',
     redirect: '/404'
@@ -81,5 +87,11 @@ router.beforeEach((to, from, next) => {
 
   next()
 })
-
+// 路由加载后
+router.afterEach(() => {
+  if (window.existLoading) {
+    // loading.hide()
+  }
+  // NProgress.done()
+})
 export default router

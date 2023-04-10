@@ -95,6 +95,7 @@ export const handleAdminRoute = (routes: any) => {
 
   // 更新stores中的路由菜单数据
   const navTabs = useNavTabs()
+  
   navTabs.setTabsViewRoutes(menuRule)
 }
 
