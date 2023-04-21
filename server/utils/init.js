@@ -6,6 +6,8 @@ class InitManager {
         // 入口方法
         InitManager.app = app;
         InitManager.initLoadRouters()
+        InitManager.loadHttpException()
+        InitManager.loadConfig()
 
     }
 
@@ -26,7 +28,16 @@ class InitManager {
         }
     }
 
+    static loadConfig(path = '') {
+        // const configPath = path || process.cwd() + '/config/envConfig'
+        const config = require('../config/envConfig')
+        global.config = config
+    }
 
+    static loadHttpException() {
+        const errors = require('./errorInterception')
+        global.errs = errors
+    }
 }
 
 module.exports = InitManager
