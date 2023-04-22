@@ -5,13 +5,14 @@ const {
 
 const { User } = require('../../models/user')
 
+// 注册校验
 class RegisterValidator extends LinValidator {
     constructor() {
         super();
         this.email = [
             new Rule('isEmail', '电子邮箱不符合规范，请输入正确的邮箱')
         ]
-        this.password1 = [
+        this.passWord1 = [
             // 用户密码指定范围
             new Rule('isLength', '密码至少6个字符，最多22个字符', {
                 min: 6,
@@ -23,7 +24,7 @@ class RegisterValidator extends LinValidator {
                 '^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]'
             )
         ]
-        this.password2 = this.password1
+        this.passWord2 = this.passWord1
         this.nickname = [
             new Rule('isLength', '昵称长度必须在4~32之间', {
                 min: 4,
@@ -32,9 +33,9 @@ class RegisterValidator extends LinValidator {
         ]
     }
 
-    validatePassword(vals) {
-        const psw1 = vals.body.password1
-        const psw2 = vals.body.password2
+    validatepassWord(vals) {
+        const psw1 = vals.body.passWord1
+        const psw2 = vals.body.passWord2
         if (psw1 !== psw2) {
             throw new Error('两次输入的密码不一致，请重新输入')
         }
@@ -52,8 +53,31 @@ class RegisterValidator extends LinValidator {
         }
     }
 }
+// 登录校验
+class LoginValidator extends LinValidator {
+    constructor() {
+        super()
+        this.email = [
+            new Rule('isLength', '不符合账号规则', {
+                min: 4,
+                max: 32
+            })
+        ]
+        this.passWord = [
+            new Rule('isOptional'),
+            new Rule('isLength', '最少6个字符', {
+                min: 6,
+                max: 128
+            })
+        ]
+    }
+    async validateLogin(vals) {
+       await User.verifyEmailpassword(vals.body.email,vals.body.passWord)
+    }
 
 
+}
 module.exports = {
-    RegisterValidator
+    RegisterValidator,
+    LoginValidator
 }

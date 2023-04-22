@@ -5,7 +5,7 @@ const { Sequelize, Model } = require('sequelize');
 
 // 用户模型
 class User extends Model {
-    static async verifyEmailPassword(email, plainPassword) {
+    static async verifyEmailpassword(email, plainpassword) {
         // 查询用户
         const user = await User.findOne({
             where: {
@@ -14,7 +14,7 @@ class User extends Model {
         })
         if (!user) throw new global.errs.AuthFailed('账号不存在')
         // 验证密码
-        const correct = bcrypt.compareSync(plainPassword, user.password)
+        const correct = bcrypt.compareSync(plainpassword, user.password)
         if (!correct) throw new global.errs.AuthFailed('密码不正确')
         return user
     }
