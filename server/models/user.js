@@ -1,41 +1,21 @@
 const bcrypt = require('bcryptjs')
-
 const { sequelize } = require('../config/db');
-const { Sequelize, Model } = require('sequelize');
-
-// 用户模型
-class User extends Model {
-    static async verifyEmailpassword(email, plainpassword) {
-        // 查询用户
-        const user = await User.findOne({
-            where: {
-                email
-            }
-        })
-        if (!user) throw new global.errs.AuthFailed('账号不存在')
-        // 验证密码
-        const correct = bcrypt.compareSync(plainpassword, user.password)
-        if (!correct) throw new global.errs.AuthFailed('密码不正确')
-        return user
-    }
-
-
-}
+const { DataTypes, Model } = require('sequelize');
 
 // 初始用户模型
-User.init({
+Model.init({
     id: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    nickname: Sequelize.STRING,
+    nickname: DataTypes.STRING,
     email: {
-        type: Sequelize.STRING(128),
+        type: DataTypes.STRING(128),
         unique: true
     },
     password: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         set(val) {
             // 加密
             const salt = bcrypt.genSaltSync(10)
@@ -50,7 +30,6 @@ User.init({
     tableName: 'user'
 })
 
-
 module.exports = {
-    User
+    User: Model
 }

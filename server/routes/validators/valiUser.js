@@ -2,7 +2,7 @@ const {
     Rule,
     LinValidator
 } = require('../../utils/lin-validator-v2')
-
+const bcrypt = require('bcryptjs')
 const { User } = require('../../models/user')
 
 // 注册校验
@@ -71,10 +71,19 @@ class LoginValidator extends LinValidator {
             })
         ]
     }
+    // 登录校验
     async validateLogin(vals) {
-       await User.verifyEmailpassword(vals.body.email,vals.body.passWord)
+        const user = await User.findOne({
+            where: {
+                email:vals.body.email
+            }
+        })
+        if (!user) throw new global.errs.AuthFailed('账号不存在')
+        // 验证密码
+        const correct = bcrypt.compareSync(vals.body.passWord, user.password)
+        if (!correct) throw new global.errs.AuthFailed('密码不正确')
+        return user
     }
-
 
 }
 module.exports = {
