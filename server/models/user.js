@@ -3,7 +3,10 @@ const { sequelize } = require('../config/db');
 const { DataTypes, Model } = require('sequelize');
 
 // 初始用户模型
-Model.init({
+class User extends Model {
+
+}
+User.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -31,5 +34,5 @@ Model.init({
 })
 
 module.exports = {
-    User: Model
+    User
 }

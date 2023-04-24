@@ -11,7 +11,7 @@ const formRef = ref<InstanceType<typeof ElForm>>()
 const userNameRef = ref<InstanceType<typeof ElInput>>()
 const passWordRef = ref<InstanceType<typeof ElInput>>()
 const form = reactive({
-  userName: '',
+  email: '',
   passWord: '',
   captcha: '',
   loading: false
@@ -67,13 +67,13 @@ const onSubmit = (formEl: InstanceType<typeof ElForm> | undefined) => {
           <!-- <img class="profile-avatar" src="~assets/avatar.png" alt="" /> -->
           <div class="content">
             <el-form @keyup.enter="onSubmit(formRef)" ref="formRef" :rules="rules" :model="form">
-              <el-form-item prop="userName">
+              <el-form-item prop="email">
                 <el-input
                   ref="userNameRef"
                   type="text"
                   clearable
-                  v-model="form.userName"
-                  placeholder="请输入用户名"
+                  v-model="form.email"
+                  placeholder="请输入邮箱"
                 >
                 </el-input>
               </el-form-item>

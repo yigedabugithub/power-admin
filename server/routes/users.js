@@ -44,7 +44,11 @@ router.get('/userInfo', async (ctx) => {
     },
     attributes: { exclude: ['password', 'deleted_at', 'updated_at'] }
   })
-  ctx.body = success(user, 'success')
+  ctx.body = success({
+    info: user,
+    siteConfig: {},
+    menus:[]
+  }, 'success')
 
 })
 

@@ -62,7 +62,7 @@ const init = () => {
   userInfoApi().then((res) => {
     siteConfig.dataFill(res.data.siteConfig)
     userInfo.dataFill(res.data.info)
-    if (res.data.menus) {
+    if (res.data?.menus && res.data?.menus.length > 0) {
       handleAdminRoute(res.data.menus)
       // 预跳转到上次路径
       if (route.params.to) {
