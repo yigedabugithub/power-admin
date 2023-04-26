@@ -26,7 +26,7 @@
           <el-form-item prop="userName" label="用户名">
             <el-input v-model="paTable.form.items!.userName" placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item prop="userName" label="密码">
+          <el-form-item prop="passWord" label="密码">
             <el-input v-model="paTable.form.items!.passWord" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item prop="mobile" label="手机号">
@@ -38,7 +38,7 @@
               <el-option label="女" :value="1" />
             </el-select>
           </el-form-item>
-          <el-form-item prop="sex" label="角色">
+          <el-form-item prop="roleList" label="角色">
             <el-select
               style="width: 100%"
               multiple
@@ -55,12 +55,6 @@
           </el-form-item>
           <el-form-item prop="userEmail" label="邮箱">
             <el-input v-model="paTable.form.items!.userEmail" placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="部门">
-            <el-input v-model="paTable.form.items!.deptId" placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="岗位">
-            <el-input v-model="paTable.form.items!.job" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="状态">
             <el-input v-model="paTable.form.items!.state" placeholder="请输入"></el-input>
@@ -95,7 +89,7 @@ const paTable = inject('paTable') as baTableClass
 
 const rules: Partial<Record<string, FormItemRule[]>> = reactive({
   // username: [buildValidatorData({ name: 'required', title: t('user.user.User name') }), buildValidatorData({ name: 'account' })],
-  // nickname: [buildValidatorData({ name: 'required', title: t('user.user.nickname') })],
+  // userName: [buildValidatorData({ name: 'required', title: t('user.user.userName') })],
   // email: [buildValidatorData({ name: 'email', title: t('user.user.email') })],
   // mobile: [buildValidatorData({ name: 'mobile' })],
   // password: [

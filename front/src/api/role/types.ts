@@ -1,5 +1,5 @@
 export interface UserInfo {
-  nickname: string
+  userName: string
   avatar: string
   roles: string[]
   perms: string[]

@@ -79,7 +79,7 @@ router.get('/userInfo', async (ctx,next) => {
     const ndata = userInfoJwt(parts)
 
     // id查询用户拥有的角色
-    const roleObj = await User.findOne({ _id_id: ndata._id_id }, 'roleList')
+    const roleObj = await User.findOne({ _id: ndata._id }, 'roleList')
     // 根据已有角色合并权限点
     const roleList = await Role.find({ _id: { $in: roleObj.roleList } })
 

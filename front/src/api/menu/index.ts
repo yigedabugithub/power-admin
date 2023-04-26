@@ -2,7 +2,7 @@
 import request from '@/utils/axios'
 
 import { AxiosPromise } from 'axios'
-const baseApi = 'api/route'
+const baseApi = 'api/menu'
 
 /**
  * 获取路由列表

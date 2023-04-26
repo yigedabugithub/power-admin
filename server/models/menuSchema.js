@@ -2,8 +2,8 @@ const mongoose = require('mongoose')
 const userSchema = mongoose.Schema({
   parentId: mongoose.Types.ObjectId,//上级菜单id
   title: String,//菜单名称
-  menu_type: String,//菜单类型(menu_type,type):目录=null,menu_dir ;菜单项=tab,menu ;按钮=null,button
-  type: String,  //同上
+  menu_type: { type: String, default: null},//菜单类型(menu_type,type):目录=null,menu_dir ;菜单项=tab,menu ;按钮=null,button
+  type: String,  //null,menu,button
   menuCode: String,//权限标识
   path: String,//路由地址
   name: String,//路由name

@@ -33,25 +33,48 @@
               placeholder="请选择"
             />
           </el-form-item>
-          <el-form-item prop="menu_type" label="菜单类型">
-            <el-radio-group v-model="paTable.form.items!.menu_type">
-              <el-radio :label="0" border>目录</el-radio>
-              <el-radio :label="1" border>菜单项</el-radio>
-              <el-radio :label="2" border>按钮</el-radio>
+          <el-form-item prop="type" label="菜单类型">
+            <el-radio-group v-model="paTable.form.items!.type">
+              <el-radio label="menu_dir" border>目录</el-radio>
+              <el-radio label="menu" border>菜单项</el-radio>
+              <el-radio label="button" border>按钮</el-radio>
             </el-radio-group>
           </el-form-item>
+          <el-form-item
+            v-if="paTable.form.items!.type === 'menu'"
+            prop="menu_type"
+            label="菜单项类型"
+          >
+            <el-radio-group v-model="paTable.form.items!.menu_type">
+              <el-radio label="tab" border>tab</el-radio>
+              <el-radio label="link" border>link</el-radio>
+              <el-radio label="iframe" border>iframe</el-radio>
+            </el-radio-group>
+          </el-form-item>
+
           <el-form-item prop="title" label="菜单名称">
             <el-input v-model="paTable.form.items!.title" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item prop="path" label="路由地址">
             <el-input v-model="paTable.form.items!.path" placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item prop="menu_type" v-if="paTable.form.items!.menu_type !== 2" label="组件路径">
+          <el-form-item
+            prop="component"
+            v-if="paTable.form.items!.type === 'menu'"
+            label="组件路径"
+          >
             <el-input v-model="paTable.form.items!.component" placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item prop="menu_type" v-if="paTable.form.items!.menu_type !== 0" label="权限标识">
-            <el-input v-model="paTable.form.items!.menuCode" placeholder="请输入"></el-input>
+          <el-form-item
+            prop="component"
+            v-if="paTable.form.items!.type !== 'button'"
+            label="icon图标"
+          >
+            <el-input v-model="paTable.form.items!.icon" placeholder="请输入"></el-input>
           </el-form-item>
+          <!-- <el-form-item prop="menu_type" v-if="paTable.form.items!.menu_type !== 0" label="权限标识">
+            <el-input v-model="paTable.form.items!.menuCode" placeholder="请输入"></el-input>
+          </el-form-item> -->
           <el-form-item prop="keepAlive" label="缓存状态">
             <el-radio-group v-model="paTable.form.items!.keepAlive">
               <el-radio :label="0" border>启用</el-radio>
@@ -87,13 +110,13 @@
 import { ref, reactive, inject, watch } from 'vue'
 import type baTableClass from '@/utils/paTable'
 import type { ElForm, FormItemRule } from 'element-plus'
-import { listRoutes } from '@/api/menu/index'
+import { listMenusAll } from '@/api/menu/index'
 const formRef = ref<InstanceType<typeof ElForm>>()
 const paTable = ref(inject('paTable') as baTableClass)
 
 const rules: Partial<Record<string, FormItemRule[]>> = reactive({
   // username: [buildValidatorData({ name: 'required', title: t('user.user.User name') }), buildValidatorData({ name: 'account' })],
-  // nickname: [buildValidatorData({ name: 'required', title: t('user.user.nickname') })],
+  // userName: [buildValidatorData({ name: 'required', title: t('user.user.userName') })],
   // email: [buildValidatorData({ name: 'email', title: t('user.user.email') })],
   // mobile: [buildValidatorData({ name: 'mobile' })],
   // password: [
@@ -118,11 +141,20 @@ const rules: Partial<Record<string, FormItemRule[]>> = reactive({
   // ],
 })
 
-const parentMenu = ref([])
+const parentMenu = ref([] as any)
 
 onMounted(() => {
-  listRoutes().then((res) => {
-    parentMenu.value = res.data || []
+  listMenusAll().then((res: any) => {
+    if (res?.code === 200)
+      parentMenu.value =
+        res.data.list.map((item: any) => {
+          return {
+            _id: item._id,
+            title: item.title
+          }
+        }) ?? []
+    parentMenu.value.unshift({ _id: '012345678910111213141516', title: 'root' })
+    console.log(parentMenu.value)
   })
 })
 </script>

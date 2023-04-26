@@ -4,7 +4,7 @@ const Menu = require('../models/menuSchema')
 const User = require('./../models/userSchema')
 const Role = require('../models/roleSchema')
 
-router.prefix('/menus')
+router.prefix('/menu')
 
 // 菜单列表查询
 router.get('/routes', async (ctx) => {

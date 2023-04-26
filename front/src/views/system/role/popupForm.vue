@@ -67,7 +67,7 @@ const formRef = ref<InstanceType<typeof ElForm>>()
 const paTable = inject('paTable') as baTableClass
 const rules: Partial<Record<string, FormItemRule[]>> = reactive({
   // username: [buildValidatorData({ name: 'required', title: t('user.user.User name') }), buildValidatorData({ name: 'account' })],
-  // nickname: [buildValidatorData({ name: 'required', title: t('user.user.nickname') })],
+  // userName: [buildValidatorData({ name: 'required', title: t('user.user.userName') })],
   // email: [buildValidatorData({ name: 'email', title: t('user.user.email') })],
   // mobile: [buildValidatorData({ name: 'mobile' })],
   // password: [

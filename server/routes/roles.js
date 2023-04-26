@@ -5,7 +5,7 @@ const router = require('koa-router')()
 const Role = require('../models/roleSchema')
 const util = require('../utils/util')
 
-router.prefix('/roles')
+router.prefix('/role')
 
 // 查询所有角色列表
 router.get('/allList', async (ctx) => {

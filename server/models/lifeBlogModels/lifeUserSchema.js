@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const lifeUserSchema = mongoose.Schema({
   // "_id": mongoose.Types.ObjectId,//用户ID
-  nickName: String,//昵称
+  userName: String,//昵称
   userName: String,//用户名称
   passWord: String,//用户密码，md5加密
   userEmail: String,//用户邮箱

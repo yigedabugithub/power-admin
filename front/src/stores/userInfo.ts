@@ -10,7 +10,7 @@ export const useUserInfo = defineStore('userInfo', {
     return {
       _id: 0,
       username: '',
-      nickname: '',
+      userName: '',
       email: '',
       mobile: '',
       avatar: '',

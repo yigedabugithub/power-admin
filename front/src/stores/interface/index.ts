@@ -27,7 +27,7 @@ export interface Layout {
 export interface AdminInfo {
   id: number
   username: string
-  nickname: string
+  userName: string
   avatar: string
   lastlogintime: string
   token: string
@@ -38,7 +38,7 @@ export interface AdminInfo {
 export interface UserInfo {
   _id: number
   username: string
-  nickname: string
+  userName: string
   email: string
   mobile: string
   gender: number

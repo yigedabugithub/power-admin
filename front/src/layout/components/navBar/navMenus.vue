@@ -58,7 +58,7 @@
           <el-avatar :size="25" fit="fill">
             <img :src="userInfo.avatar" alt="" />
           </el-avatar>
-          <div class="admin-name">{{ userInfo.nickname }}</div>
+          <div class="admin-name">{{ userInfo.userName }}</div>
         </div>
       </template>
       <div>
@@ -67,7 +67,7 @@
             <img :src="userInfo.avatar" alt="" />
           </el-avatar>
           <div class="admin-info-other">
-            <div class="admin-info-name">{{ userInfo.nickname }}</div>
+            <div class="admin-info-name">{{ userInfo.userName }}</div>
             <div class="admin-info-lasttime">{{ userInfo.lastlogintime }}</div>
           </div>
         </div>
@@ -118,10 +118,12 @@ const onUserInfo = () => {
 }
 
 const onLogout = () => {
-  logoutApi().then(() => {
-    Local.remove(USER_INFO)
-    router.go(0)
-  })
+  Local.remove(USER_INFO)
+  router.go(0)
+  // logoutApi().then(() => {
+  //   Local.remove(USER_INFO)
+  //   router.go(0)
+  // })
 }
 
 const onClearCache = (type: string) => {
