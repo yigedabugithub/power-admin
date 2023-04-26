@@ -29,7 +29,7 @@ app.use(
   cors({
     origin: function (ctx) { //设置允许来自指定域名请求
       const whiteList = ['http://power-admin.tech', 'http://123.56.216.221:1080',]; //可跨域白名单
-      let url = ctx.header.referer.slice(0, ctx.header.referer.length - 1);
+      let url = ctx.header.referer?.slice(0, ctx.header.referer.length - 1);
       if (whiteList.includes(url)) {
         return url //注意，这里域名末尾不能带/，否则不成功，所以在之前我把/通过substr干掉了
       }

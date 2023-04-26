@@ -1,22 +1,23 @@
 import createAxios from '@/utils/axios'
 
+const baseApi = 'api/user'
 export function loginApi(data: anyObj = {}): ApiPromise {
   return createAxios({
-    url: 'api/users/login',
+    url: baseApi + '/login',
     method: 'post',
     data
   }) as ApiPromise
 }
 export function logoutApi(data: anyObj = {}): ApiPromise {
   return createAxios({
-    url: 'api/users/logout',
+    url: baseApi + '/logout',
     method: 'post',
     data
   }) as ApiPromise
 }
 export function userInfoApi(data: anyObj = {}): ApiPromise {
   return createAxios({
-    url: 'api/users/userInfo',
+    url: baseApi + '/userInfo',
     method: 'get',
     data
   }) as ApiPromise

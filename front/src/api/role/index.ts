@@ -9,16 +9,18 @@ import request from '@/utils/axios'
 //   })
 // }
 
+const baseApi = 'api/role'
+
 export function rolesList(params: any) {
   return request({
-    url: '/api/roles/list',
+    url: baseApi + '/list',
     method: 'get',
     params
   })
 }
 export function allRolesListApi() {
   return request({
-    url: '/api/roles/allList',
+    url: baseApi + '/allList',
     method: 'get'
   })
 }

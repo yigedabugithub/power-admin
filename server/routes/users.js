@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 const Menu = require('../models/menuSchema')
 const Role = require('../models/roleSchema')
 
-router.prefix('/users')
+router.prefix('/user')
 
 const userInfoJwt = (parts) => {
   let token = '';
@@ -73,7 +73,7 @@ router.post('/login', async (ctx) => {
 })
 
 // 用户信息(info,menu)
-router.get('/userInfo', async (ctx) => {
+router.get('/userInfo', async (ctx,next) => {
   let parts = ctx.request.header.authorization.split(' ');
   try {
     const ndata = userInfoJwt(parts)
